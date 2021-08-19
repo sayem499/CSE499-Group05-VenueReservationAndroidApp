@@ -21,6 +21,7 @@ import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.reservation.app.MainActivity;
 import com.reservation.app.databinding.ActivityLoginBinding;
+import com.reservation.app.datasource.SharedPrefManager;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -42,13 +43,21 @@ public class Login extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
+    private SharedPrefManager pref;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        pref = new SharedPrefManager(Login.this);
 
+        if(pref.checkLogin()) {
+            startActivity(new Intent(Login.this, Home.class));
+            finish();
+
+        }
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         binding.phoneL1.setVisibility(View.VISIBLE);
@@ -152,6 +161,7 @@ public class Login extends AppCompatActivity {
                        String phone = firebaseAuth.getCurrentUser().getPhoneNumber();
                        Toast.makeText(Login.this,"Logged In as "+phone,Toast.LENGTH_SHORT).show();
                        Intent intent = new Intent(getApplicationContext(),Home.class);
+                       pref.userLogin(phone);
                        startActivity(intent);
                        finish();
                     }
