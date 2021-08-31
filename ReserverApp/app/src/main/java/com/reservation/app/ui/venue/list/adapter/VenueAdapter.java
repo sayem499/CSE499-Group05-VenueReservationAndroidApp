@@ -2,13 +2,13 @@ package com.reservation.app.ui.venue.list.adapter;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.reservation.app.R;
 import com.reservation.app.databinding.VenueListItemBinding;
 import com.reservation.app.model.Venue;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -20,34 +20,38 @@ import java.util.List;
  */
 public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.ViewHolder> {
 
-    private final List<Venue> values;
+    private List<Venue> values;
 
     public VenueAdapter(List<Venue> items) {
         values = items;
     }
 
     public void updateList(List<Venue> items) {
-        values.clear();
-        values.addAll(items);
+        values = items;
         notifyDataSetChanged();
     }
 
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
-        return new ViewHolder(VenueListItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        ViewHolder view = new ViewHolder(VenueListItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+
+        return view;
     }
 
     @Override
     public void onBindViewHolder(@NotNull final ViewHolder holder, int position) {
         Venue venue = values.get(position);
-        holder.title.setText(venue.getName());
-        holder.address.setText(venue.getAddress().getDisplayAddressForList());
-        holder.price.setText(venue.getPrice());
-        holder.capacity.setText(venue.getFormattedSeatCapacity());
-        holder.description.setText(venue.getDescription());
+        holder.binding.title.setText(venue.getName());
+        holder.binding.address.setText(venue.getAddress().getDisplayAddressForList());
+        holder.binding.price.setText(venue.getPrice());
+        holder.binding.capacity.setText(venue.getFormattedSeatCapacity());
+        holder.binding.shortDescription.setText(venue.getDescription());
 
-        //Photo will be bind here with the 3rd party library
+        Picasso.get()
+                .load(venue.getPhotoUrls().get(0))
+                .placeholder(R.drawable.placeholder1)
+                .into(holder.binding.photo);
     }
 
     @Override
@@ -56,16 +60,11 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.ViewHolder> 
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-
-        ImageView photo;
-        TextView title;
-        TextView address;
-        TextView price;
-        TextView capacity;
-        TextView description;
+        VenueListItemBinding binding;
 
         public ViewHolder(VenueListItemBinding binding) {
             super(binding.getRoot());
+            this.binding = binding;
         }
     }
 }
