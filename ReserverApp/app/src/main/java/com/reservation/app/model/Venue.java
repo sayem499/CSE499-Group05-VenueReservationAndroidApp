@@ -11,6 +11,7 @@ public class Venue {
     private String id;
     private String name;
     private String description;
+    private Address address;
     private User owner;
     private int seatCapacity;
     private Double rentCost;
@@ -39,6 +40,14 @@ public class Venue {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public User getOwner() {
