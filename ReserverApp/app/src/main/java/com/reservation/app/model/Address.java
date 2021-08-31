@@ -78,4 +78,8 @@ public class Address {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
+
+    public String getDisplayAddressForList() {
+        return street1 + ", " + city;
+    }
 }

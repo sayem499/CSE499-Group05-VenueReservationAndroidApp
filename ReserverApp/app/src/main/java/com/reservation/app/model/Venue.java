@@ -89,4 +89,12 @@ public class Venue {
     public void setSlots(List<String> slots) {
         this.slots = slots;
     }
+
+    public String getPrice() {
+        return "BDT " + rentCost;
+    }
+
+    public String getFormattedSeatCapacity() {
+        return "Capacity " + seatCapacity;
+    }
 }
