@@ -1,11 +1,9 @@
 package com.reservation.app.ui.venue.list;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,14 +11,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.reservation.app.R;
 import com.reservation.app.datasource.VenueDataManager;
 import com.reservation.app.datasource.helper.RemoteResult;
-import com.reservation.app.model.Address;
 import com.reservation.app.model.Venue;
+import com.reservation.app.ui.util.DialogBuilder;
 import com.reservation.app.ui.venue.list.adapter.VenueAdapter;
 
 import org.jetbrains.annotations.NotNull;
@@ -74,7 +69,7 @@ public class VenueListFragment extends Fragment {
 
             @Override
             public void onFailure(Exception error) {
-                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                DialogBuilder.buildOkDialog(getContext(), error.getMessage()).show();
             }
         });
     }
