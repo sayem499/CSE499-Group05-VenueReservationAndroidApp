@@ -1,22 +1,42 @@
 package com.reservation.app.ui.venue.list;
 
-import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.reservation.app.R;
+import com.reservation.app.datasource.VenueDataManager;
+import com.reservation.app.datasource.helper.RemoteResult;
+import com.reservation.app.model.Address;
+import com.reservation.app.model.Venue;
+import com.reservation.app.ui.venue.list.adapter.VenueAdapter;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Fatema
  * since 8/25/21.
  */
 public class VenueListFragment extends Fragment {
+
+    private VenueAdapter venueAdapter;
+    private RecyclerView recyclerView;
+
 
     public VenueListFragment() {
     }
@@ -32,14 +52,30 @@ public class VenueListFragment extends Fragment {
 
         getActivity().setTitle(getString(R.string.venue_list));
 
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+        recyclerView = view.findViewById(R.id.list);
 
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-//            recyclerView.setAdapter(new VenueAdapter(Collections.emptyList()));
-        }
+        venueAdapter = new VenueAdapter(new ArrayList<>());
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(venueAdapter);
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        VenueDataManager.requestVenueList(new RemoteResult<List<Venue>>() {
+
+            @Override
+            public void onSuccess(List<Venue> data) {
+                venueAdapter.updateList(data);
+            }
+
+            @Override
+            public void onFailure(Exception error) {
+                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

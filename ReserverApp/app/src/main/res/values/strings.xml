@@ -11,4 +11,5 @@
     <string name="login_failed">"Login failed"</string>
     <string name="didn_t_get_otp_resend">Didn\'t Get OTP?    <b>Resend</b></string>
     <string name="venue_list">Venue List</string>
+    <string name="venue_photo">Venue Photo</string>
 </resources>

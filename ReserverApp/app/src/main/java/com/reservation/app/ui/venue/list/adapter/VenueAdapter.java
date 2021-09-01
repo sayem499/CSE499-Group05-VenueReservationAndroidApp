@@ -20,14 +20,15 @@ import java.util.List;
  */
 public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.ViewHolder> {
 
-    private List<Venue> values;
+    private final List<Venue> values;
 
     public VenueAdapter(List<Venue> items) {
         values = items;
     }
 
     public void updateList(List<Venue> items) {
-        values = items;
+        values.clear();
+        values.addAll(items);
         notifyDataSetChanged();
     }
 
