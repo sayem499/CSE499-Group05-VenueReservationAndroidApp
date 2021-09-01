@@ -1,5 +1,6 @@
 package com.reservation.app.ui.venue.list;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +33,6 @@ public class VenueListFragment extends Fragment {
     private VenueAdapter venueAdapter;
     private RecyclerView recyclerView;
 
-
     public VenueListFragment() {
     }
 
@@ -60,16 +60,22 @@ public class VenueListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        Dialog progressDialog = DialogBuilder.buildProgressDialog(getContext());
+        progressDialog.show();
+
         VenueDataManager.requestVenueList(new RemoteResult<List<Venue>>() {
 
             @Override
             public void onSuccess(List<Venue> data) {
                 venueAdapter.updateList(data);
+                progressDialog.dismiss();
             }
 
             @Override
             public void onFailure(Exception error) {
                 DialogBuilder.buildOkDialog(getContext(), error.getMessage()).show();
+                progressDialog.dismiss();
             }
         });
     }

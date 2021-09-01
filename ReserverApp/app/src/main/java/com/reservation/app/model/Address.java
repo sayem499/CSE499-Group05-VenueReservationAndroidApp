@@ -1,7 +1,7 @@
 package com.reservation.app.model;
 
 /**
- * @author Julkar Nain
+ * @author Fatema
  * since 8/31/21.
  */
 public class Address {

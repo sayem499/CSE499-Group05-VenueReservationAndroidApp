@@ -4,8 +4,10 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 
+import dmax.dialog.SpotsDialog;
+
 /**
- * @author Julkar Nain
+ * @author Fatema
  * since 9/1/21.
  */
 public class DialogBuilder {
@@ -23,5 +25,9 @@ public class DialogBuilder {
                 .Builder(context)
                 .setMessage(message)
                 .create();
+    }
+
+    public static Dialog buildProgressDialog(Context context) {
+        return new SpotsDialog.Builder().setContext(context).build();
     }
 }

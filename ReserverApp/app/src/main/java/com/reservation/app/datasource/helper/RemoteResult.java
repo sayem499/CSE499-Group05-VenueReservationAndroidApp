@@ -1,7 +1,7 @@
 package com.reservation.app.datasource.helper;
 
 /**
- * @author Julkar Nain
+ * @author Fatema
  * since 9/1/21.
  */
 public interface RemoteResult<T> {

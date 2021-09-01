@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Julkar Nain
+ * @author Fatema
  * since 9/1/21.
  */
 public class VenueDataManager {
