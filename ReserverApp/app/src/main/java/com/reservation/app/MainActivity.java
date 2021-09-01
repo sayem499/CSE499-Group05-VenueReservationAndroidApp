@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.reservation.app.ui.Login;
+import com.reservation.app.ui.venue.VenueActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(getApplicationContext(), Login.class);
+        Intent intent = new Intent(getApplicationContext(), VenueActivity.class);
         startActivity(intent);
         finish();
     }
