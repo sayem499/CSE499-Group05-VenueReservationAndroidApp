@@ -51,7 +51,8 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.ViewHolder> 
 
         Picasso.get()
                 .load(venue.getPhotoUrls().get(0))
-                .placeholder(R.drawable.placeholder1)
+                .placeholder(R.drawable.progress_indicator)
+                .error(R.drawable.placeholder1)
                 .into(holder.binding.photo);
     }
 
