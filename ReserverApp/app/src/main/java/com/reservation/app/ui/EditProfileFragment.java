@@ -4,12 +4,23 @@ import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.reservation.app.R;
+import com.reservation.app.datasource.SharedPrefManager;
+import com.reservation.app.datasource.UserModel;
+import com.reservation.app.viewmodel.AppViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +41,14 @@ public class EditProfileFragment extends DialogFragment {
     public EditProfileFragment() {
         // Required empty public constructor
     }
+
+    private AppViewModel appViewModel;
+    private SharedPrefManager pref;
+    private EditText firstName,lastName,email,address;
+    private Button updateButton;
+    private List<UserModel> userList;
+
+
 
     /**
      * Use this factory method to create a new instance of
@@ -56,12 +75,71 @@ public class EditProfileFragment extends DialogFragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        appViewModel =  new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
+                .getInstance(this.requireActivity().getApplication())).get(AppViewModel.class);
+        pref = new SharedPrefManager(getContext());
+
+
+        userList = new ArrayList<>();
+        appViewModel.initUserData();
+        userList = appViewModel.fetchUserData();
+
+
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_profile, container, false);
+         View view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
+         firstName = view.findViewById(R.id.firstNameEditText);
+         lastName = view.findViewById(R.id.lastNameEditText);
+         email = view.findViewById(R.id.emailAddressEditText);
+         address = view.findViewById(R.id.addressEditText);
+
+
+         setUserData();
+
+         updateButton = view.findViewById(R.id.button_update);
+         updateButton.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 updateUserData();
+             }
+         });
+
+
+
+         return view;
     }
+
+    private void setUserData(){
+
+        if(userList != null)
+        for(UserModel userModel : userList)
+            if(userModel.getUserPhoneNumber().equals(pref.getPhoneNumber())){
+                firstName.setText(userModel.getUserFirstName());
+                lastName.setText(userModel.getUserLastName());
+                email.setText(userModel.getUserEmail());
+                address.setText(userModel.getUserAddress());
+                break;
+            }
+
+    }
+
+    private void updateUserData() {
+        UserModel userModel = new UserModel();
+        userModel.setUserFirstName(firstName.getText().toString());
+        userModel.setUserLastName(lastName.getText().toString());
+        userModel.setUserEmail(email.getText().toString());
+        userModel.setUserAddress(address.getText().toString());
+        userModel.setUserPhoneNumber(pref.getPhoneNumber());
+
+        appViewModel.insertUserData(userModel,getContext());
+        Toast.makeText(getContext(),"Profile Updated.", Toast.LENGTH_SHORT).show();
+    }
+
 }

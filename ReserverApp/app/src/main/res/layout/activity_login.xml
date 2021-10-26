@@ -52,8 +52,10 @@
                 android:layout_marginTop="10dp"
                 android:background="#fff"
                 android:ems="10"
+                android:hint="+880 1xxxxxxxxx"
                 android:inputType="phone"
                 android:padding="10dp"
+                android:textAlignment="center"
                 android:textColor="#000000" />
 
             <Button

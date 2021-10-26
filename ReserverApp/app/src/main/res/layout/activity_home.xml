@@ -16,7 +16,7 @@
             android:id="@+id/home_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#8EC4EF"
+            android:background="#cddb7f"
             android:textAlignment="center"
             app:title="Home"
             app:titleTextColor="#03101B">
