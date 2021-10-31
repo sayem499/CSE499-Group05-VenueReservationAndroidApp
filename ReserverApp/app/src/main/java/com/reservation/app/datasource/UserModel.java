@@ -7,7 +7,6 @@ public class UserModel {
     private String userLastName;
     private String userEmail;
     private String userAddress;
-    private String userProfilePictureUrl;
 
     public String getUserPhoneNumber() {
         return userPhoneNumber;
@@ -57,11 +56,4 @@ public class UserModel {
         this.userAddress = userAddress;
     }
 
-    public String getUserProfilePictureUrl() {
-        return userProfilePictureUrl;
-    }
-
-    public void setUserProfilePictureUrl(String userProfilePictureUrl) {
-        this.userProfilePictureUrl = userProfilePictureUrl;
-    }
 }

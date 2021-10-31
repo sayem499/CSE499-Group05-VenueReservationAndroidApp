@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         appViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(this.getApplication())).get(AppViewModel.class);
         appViewModel.initUserData();
+        appViewModel.initUserProfilePicture();
 
         Intent intent = new Intent(getApplicationContext(), Login.class);
         startActivity(intent);

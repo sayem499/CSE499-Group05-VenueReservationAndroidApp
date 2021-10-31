@@ -12,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.reservation.app.datasource.SharedPrefManager;
 import com.reservation.app.datasource.UserModel;
+import com.reservation.app.datasource.UserProfilePicture;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -21,14 +22,16 @@ import java.util.List;
 public class AppRepository {
     private static AppRepository instance;
     private final FirebaseDatabase firebaseRef;
-    private final DatabaseReference userDBRef;
+    private final DatabaseReference userDBRef,userProfilePicRef;
     private SharedPrefManager pref;
 
     private List<UserModel> userList;
+    private List<UserProfilePicture> userProfilePictureList;
 
     public AppRepository(){
         firebaseRef = FirebaseDatabase.getInstance();
         userDBRef = firebaseRef.getReference("users");
+        userProfilePicRef = firebaseRef.getReference("profile_pictures");
 
 
     }
@@ -64,5 +67,31 @@ public class AppRepository {
       });
 
       return userList;
+    }
+
+    public void insertProfilePic(UserProfilePicture userProfilePicture,Context context){
+        pref = new SharedPrefManager(context);
+        userProfilePicRef.child(pref.getPhoneNumber()).setValue(userProfilePicture);
+    }
+
+    public List<UserProfilePicture> fetchUserProfilePicture(){
+        userProfilePicRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    userProfilePictureList = new ArrayList<>();
+                    for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                        userProfilePictureList.add(dataSnapshot.getValue(UserProfilePicture.class));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+
+        return userProfilePictureList;
     }
 }

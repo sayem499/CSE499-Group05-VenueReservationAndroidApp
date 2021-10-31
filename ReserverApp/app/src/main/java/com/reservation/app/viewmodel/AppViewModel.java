@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
 import com.reservation.app.datasource.UserModel;
+import com.reservation.app.datasource.UserProfilePicture;
 import com.reservation.app.repository.AppRepository;
 
 import org.jetbrains.annotations.NotNull;
@@ -17,6 +18,7 @@ public class AppViewModel extends AndroidViewModel {
 
     private final AppRepository appRepository;
     private List<UserModel> userList;
+    private List<UserProfilePicture> userProfilePictureList;
 
     public AppViewModel(@NonNull @NotNull Application application) {
         super(application);
@@ -39,4 +41,17 @@ public class AppViewModel extends AndroidViewModel {
     public List<UserModel> fetchUserData() {
         return userList;
     }
+
+    public void insertProfilePic(UserProfilePicture userProfilePicture,Context context){
+        appRepository.insertProfilePic(userProfilePicture,context);
+    }
+
+    public void initUserProfilePicture(){
+        if(userProfilePictureList != null){
+            return;
+        }
+        userProfilePictureList = appRepository.fetchUserProfilePicture();
+    }
+
+    public List<UserProfilePicture> fetchUserProfilePictureList(){return userProfilePictureList;}
 }
