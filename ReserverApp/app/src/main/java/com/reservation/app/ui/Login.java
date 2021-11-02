@@ -22,6 +22,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.reservation.app.MainActivity;
 import com.reservation.app.databinding.ActivityLoginBinding;
 import com.reservation.app.datasource.SharedPrefManager;
+import com.reservation.app.ui.venue.VenueActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -160,7 +161,7 @@ public class Login extends AppCompatActivity {
                        progressDialog.dismiss();
                        String phone = firebaseAuth.getCurrentUser().getPhoneNumber();
                        Toast.makeText(Login.this,"Logged In as "+phone,Toast.LENGTH_SHORT).show();
-                       Intent intent = new Intent(getApplicationContext(),Home.class);
+                       Intent intent = new Intent(getApplicationContext(), VenueActivity.class);
                        pref.userLogin(phone);
                        startActivity(intent);
                        finish();
