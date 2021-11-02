@@ -10,9 +10,9 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="didn_t_get_otp_resend">Didn\'t Get OTP?    <b>Resend</b></string>
-    <string name="home">home</string>
-    <string name="profile">profile</string>
-    <string name="logout">logout</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
     <!-- TODO: Remove or change this placeholder text -->
