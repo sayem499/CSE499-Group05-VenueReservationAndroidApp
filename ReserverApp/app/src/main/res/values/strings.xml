@@ -12,6 +12,7 @@
     <string name="didn_t_get_otp_resend">Didn\'t Get OTP?    <b>Resend</b></string>
     <string name="home">Home</string>
     <string name="profile">Profile</string>
+    <string name="add_venue">Add Venue</string>
     <string name="logout">Logout</string>
     <string name="open">Open</string>
     <string name="close">Close</string>

@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.reservation.app.R;
 import com.reservation.app.datasource.SharedPrefManager;
+import com.reservation.app.ui.venue.add.AddVenueActivity;
 
 
 public class Home extends AppCompatActivity {
@@ -76,6 +77,11 @@ public class Home extends AppCompatActivity {
                         finish();
                         break;
 
+
+                        case R.id.menu_add_venue:
+                        startActivity(new Intent(getApplicationContext(), AddVenueActivity.class));
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
 
                 }
 

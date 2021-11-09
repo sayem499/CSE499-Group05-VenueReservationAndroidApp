@@ -11,6 +11,12 @@
 
     </item>
 
+    <item android:id="@+id/menu_add_venue"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="@string/add_venue">
+
+    </item>
+
     <item android:id="@+id/menu_logout"
         android:icon="@drawable/ic_baseline_login_24"
         android:title="@string/logout">
