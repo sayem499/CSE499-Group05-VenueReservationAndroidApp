@@ -5,13 +5,6 @@
         android:title="@string/home">
     </item>
 
-    <item android:id="@+id/menu_venue_List"
-        android:icon="@drawable/ic_baseline_list_24"
-        android:title="@string/venue_list">
-
-    </item>
-
-
     <item android:id="@+id/menu_profile"
         android:icon="@drawable/ic_baseline_person_24"
         android:title="@string/profile">

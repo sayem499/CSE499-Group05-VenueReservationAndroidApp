@@ -9,24 +9,18 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.reservation.app.R;
 import com.reservation.app.datasource.SharedPrefManager;
-import com.reservation.app.ui.venue.VenueActivity;
 
 
 public class Home extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
-    private TextView helloText;
     private SharedPrefManager pref;
     private NavigationView navigationView;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -41,7 +35,6 @@ public class Home extends AppCompatActivity {
         pref = new SharedPrefManager(Home.this);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-        helloText = findViewById(R.id.hello_textView);
 
         toolbar = findViewById(R.id.home_toolbar);
         setSupportActionBar(toolbar);
@@ -70,12 +63,6 @@ public class Home extends AppCompatActivity {
                         finish();
                         break;
 
-                        case R.id.menu_venue_List:
-                        startActivity(new Intent(getApplicationContext(), VenueActivity.class));
-                        drawerLayout.closeDrawer(GravityCompat.START);
-                        break;
-
-
                         case R.id.menu_profile:
                         startActivity(new Intent(getApplicationContext(),Profile.class));
                         drawerLayout.closeDrawer(GravityCompat.START);
@@ -97,17 +84,9 @@ public class Home extends AppCompatActivity {
         });
 
         if(firebaseUser != null){
-            helloText.setText("Hello !! "+firebaseUser.getPhoneNumber());
-
+//            helloText.setText("Hello !! "+firebaseUser.getPhoneNumber());
         }
-
-
     }
-
-
-
-
-
 }
 
 
