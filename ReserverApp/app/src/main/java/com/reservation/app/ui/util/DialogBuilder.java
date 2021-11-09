@@ -30,4 +30,8 @@ public class DialogBuilder {
     public static Dialog buildProgressDialog(Context context) {
         return new SpotsDialog.Builder().setContext(context).build();
     }
+
+    public static Dialog buildProgressDialog(Context context, String message) {
+        return new SpotsDialog.Builder().setContext(context).setMessage(message).build();
+    }
 }

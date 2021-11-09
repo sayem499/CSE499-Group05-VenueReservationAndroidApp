@@ -9,10 +9,10 @@ import java.util.List;
 public class Venue {
 
     private String id;
+    private String userPhoneNumber;
     private String name;
     private String description;
     private Address address;
-    private User owner;
     private int seatCapacity;
     private Double rentCost;
     private List<String> photoUrls;
@@ -24,6 +24,14 @@ public class Venue {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getUserPhoneNumber() {
+        return userPhoneNumber;
+    }
+
+    public void setUserPhoneNumber(String userPhoneNumber) {
+        this.userPhoneNumber = userPhoneNumber;
     }
 
     public String getName() {
@@ -48,14 +56,6 @@ public class Venue {
 
     public void setAddress(Address address) {
         this.address = address;
-    }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
     }
 
     public int getSeatCapacity() {

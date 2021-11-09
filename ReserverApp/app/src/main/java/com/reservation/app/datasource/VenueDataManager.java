@@ -50,7 +50,7 @@ public class VenueDataManager {
 
     public static void saveVenue(Venue venue, RemoteResult<Venue> resultCallBack) {
 
-        venueRef.push().setValue(venueRef).addOnCompleteListener(task -> {
+        venueRef.push().setValue(venue).addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
                 Log.d("firebase", String.valueOf(task.getResult()));
                 resultCallBack.onFailure(task.getException());
