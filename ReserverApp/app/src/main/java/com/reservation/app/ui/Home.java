@@ -6,24 +6,32 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.material.internal.ManufacturerUtils;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.reservation.app.R;
+import com.reservation.app.adapters.SearchRecyclerAdapter;
 import com.reservation.app.datasource.SharedPrefManager;
+import com.reservation.app.datasource.VenueDataManager;
+import com.reservation.app.datasource.helper.RemoteResult;
+import com.reservation.app.model.Venue;
+import com.reservation.app.ui.util.DialogBuilder;
 import com.reservation.app.ui.venue.VenueActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Home extends AppCompatActivity {
@@ -36,6 +44,9 @@ public class Home extends AppCompatActivity {
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private DrawerLayout drawerLayout;
     private androidx.appcompat.widget.Toolbar toolbar;
+    private RecyclerView recyclerView;
+    private SearchRecyclerAdapter searchRecyclerAdapter;
+    private static final String LOG_TAG = Profile.class.getSimpleName();
 
 
     @Override
@@ -45,7 +56,6 @@ public class Home extends AppCompatActivity {
         pref = new SharedPrefManager(Home.this);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-        helloText = findViewById(R.id.hello_textView);
 
         toolbar = findViewById(R.id.home_toolbar);
         setSupportActionBar(toolbar);
@@ -58,6 +68,36 @@ public class Home extends AppCompatActivity {
                         R.string.open,R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
+
+        Dialog progressDialog = DialogBuilder.buildProgressDialog(Home.this);
+        progressDialog.show();
+
+        recyclerView = findViewById(R.id.search_recycler_view);
+        searchRecyclerAdapter = new SearchRecyclerAdapter(Home.this);
+        recyclerView.setAdapter(searchRecyclerAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(Home.this));
+
+        VenueDataManager.requestVenueList(new RemoteResult<List<Venue>>() {
+
+            @Override
+            public void onSuccess(List<Venue> data) {
+                if(data != null){
+                    Log.d(LOG_TAG,"!INSIDE  IFFF!!!!!!!!!!!!");
+                    List<Venue> venueList = new ArrayList<>(data);
+                    searchRecyclerAdapter.setVenueList(venueList);
+                    progressDialog.dismiss();}
+
+            }
+
+            @Override
+            public void onFailure(Exception error) {
+                DialogBuilder.buildOkDialog(Home.this, error.getMessage()).show();
+                progressDialog.dismiss();
+            }
+        });
+
+        recyclerView.setAdapter(searchRecyclerAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(Home.this));
 
 
 
@@ -101,13 +141,13 @@ public class Home extends AppCompatActivity {
             }
         });
 
-        if(firebaseUser != null){
-            helloText.setText("Hello !! "+firebaseUser.getPhoneNumber());
 
-        }
+
 
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
