@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,6 +48,8 @@ public class Home extends AppCompatActivity {
     private RecyclerView recyclerView;
     private SearchRecyclerAdapter searchRecyclerAdapter;
     private static final String LOG_TAG = Profile.class.getSimpleName();
+    private List<Venue> venueList;
+
 
 
     @Override
@@ -73,7 +76,7 @@ public class Home extends AppCompatActivity {
         progressDialog.show();
 
         recyclerView = findViewById(R.id.search_recycler_view);
-        searchRecyclerAdapter = new SearchRecyclerAdapter(Home.this);
+        searchRecyclerAdapter = new SearchRecyclerAdapter(Home.this,new ArrayList<>());
         recyclerView.setAdapter(searchRecyclerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(Home.this));
 
@@ -83,7 +86,7 @@ public class Home extends AppCompatActivity {
             public void onSuccess(List<Venue> data) {
                 if(data != null){
                     Log.d(LOG_TAG,"!INSIDE  IFFF!!!!!!!!!!!!");
-                    List<Venue> venueList = new ArrayList<>(data);
+                    venueList = new ArrayList<>(data);
                     searchRecyclerAdapter.setVenueList(venueList);
                     progressDialog.dismiss();}
 
@@ -167,7 +170,26 @@ public class Home extends AppCompatActivity {
 
         menu.findItem(R.id.search).setOnActionExpandListener(onActionExpandListener);
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        venueSearch(searchView);    // Search Filtering Method
+
         return true;
+    }
+
+
+    private void venueSearch(SearchView searchView) {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchRecyclerAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
     }
 }
 
