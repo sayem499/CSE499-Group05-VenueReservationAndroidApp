@@ -1,5 +1,6 @@
 package com.reservation.app.ui.venue.list.adapter;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -49,11 +50,15 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.ViewHolder> 
         holder.binding.capacity.setText(venue.getFormattedSeatCapacity());
         holder.binding.shortDescription.setText(venue.getDescription());
 
-        Picasso.get()
-                .load(venue.getPhotoUrls().get(0))
-                .placeholder(R.drawable.progress_indicator)
-                .error(R.drawable.placeholder1)
-                .into(holder.binding.photo);
+        String photoPath = venue.getPhotoUrls().get(0);
+
+        if (!TextUtils.isEmpty(photoPath)) {
+            Picasso.get()
+                    .load(photoPath)
+                    .placeholder(R.drawable.progress_indicator)
+                    .error(R.drawable.placeholder1)
+                    .into(holder.binding.photo);
+        }
     }
 
     @Override
