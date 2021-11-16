@@ -12,7 +12,7 @@
     </item>
 
     <item android:id="@+id/menu_add_venue"
-        android:icon="@drawable/ic_baseline_person_24"
+        android:icon="@drawable/ic_baseline_add_venue_24"
         android:title="@string/add_venue">
 
     </item>
