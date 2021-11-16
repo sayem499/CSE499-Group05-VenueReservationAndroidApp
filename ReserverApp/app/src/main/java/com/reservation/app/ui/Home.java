@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,30 +18,37 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
+
+import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.reservation.app.R;
 import com.reservation.app.adapters.SearchRecyclerAdapter;
 import com.reservation.app.datasource.SharedPrefManager;
+import com.reservation.app.datasource.UserModel;
+import com.reservation.app.datasource.UserProfilePicture;
 import com.reservation.app.datasource.VenueDataManager;
 import com.reservation.app.datasource.helper.RemoteResult;
 import com.reservation.app.model.Venue;
 import com.reservation.app.ui.util.DialogBuilder;
 import com.reservation.app.ui.venue.VenueActivity;
+import com.reservation.app.viewmodel.AppViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class Home extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
-    private TextView helloText;
+    private AppViewModel appViewModel;
     private SharedPrefManager pref;
     private NavigationView navigationView;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -47,8 +56,12 @@ public class Home extends AppCompatActivity {
     private androidx.appcompat.widget.Toolbar toolbar;
     private RecyclerView recyclerView;
     private SearchRecyclerAdapter searchRecyclerAdapter;
+    private List<UserModel> userList;
+    private List<UserProfilePicture> userProfilePictures;
     private static final String LOG_TAG = Profile.class.getSimpleName();
     private List<Venue> venueList;
+    private CircleImageView imageView;
+    private TextView userName;
 
 
 
@@ -59,6 +72,18 @@ public class Home extends AppCompatActivity {
         pref = new SharedPrefManager(Home.this);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
+
+        appViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
+                .getInstance(this.getApplication())).get(AppViewModel.class);
+        userList = new ArrayList<>();
+        appViewModel.initUserData();
+        userList = appViewModel.fetchUserData();
+
+        userProfilePictures = new ArrayList<>();
+        appViewModel.initUserProfilePicture();
+        userProfilePictures = appViewModel.fetchUserProfilePictureList();
+
+
 
         toolbar = findViewById(R.id.home_toolbar);
         setSupportActionBar(toolbar);
@@ -144,12 +169,42 @@ public class Home extends AppCompatActivity {
             }
         });
 
-
+        View headerView = navigationView.getHeaderView(0);
+        imageView = headerView.findViewById(R.id.userImage_sideMenu);
+        userName =  headerView.findViewById(R.id.username_sideMenu_textView);
+        setUserDataInSideMenu();
 
 
 
     }
 
+    @SuppressLint("SetTextI18n")
+    private void setUserDataInSideMenu() {
+       if(userList != null) {
+           for (UserModel userModel : userList) {
+               if (userModel.getUserPhoneNumber().equals(pref.getPhoneNumber())) {
+                   if (userModel.getUserFirstName().equals("")) {
+                       userName.setText(pref.getPhoneNumber());
+                   } else {
+                       Log.d(LOG_TAG, userModel.getUserFirstName() + " " + userModel.getUserLastName());
+                       userName.setText(userModel.getUserFirstName() + " " + userModel.getUserLastName());
+                   }
+                   break;
+               }
+           }
+       }
+        if(userProfilePictures != null) {
+            for (UserProfilePicture userProfilePicture : userProfilePictures) {
+                if (userProfilePicture.getUserPhoneNumber().equals(pref.getPhoneNumber())) {
+                    Glide.with(getApplicationContext()).load(userProfilePicture.getPictureUrl()).into(imageView);
+                    break;
+                }
+            }
+
+        }
+
+
+    }
 
 
     @Override

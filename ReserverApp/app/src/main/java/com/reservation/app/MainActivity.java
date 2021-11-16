@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
                 .getInstance(this.getApplication())).get(AppViewModel.class);
         appViewModel.initUserData();
         appViewModel.initUserProfilePicture();
-        splashImage = findViewById(R.id.imageView6);
+        splashImage = findViewById(R.id.splash_screen_image);
 
         logoText1 = findViewById(R.id.reserver_app_logo);
         logoText2 = findViewById(R.id.textView8);
