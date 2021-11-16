@@ -1,16 +1,15 @@
 package com.reservation.app.ui.venue.add;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.QuickContactBadge;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.github.dhaval2404.imagepicker.ImagePicker;
-import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -29,12 +27,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.reservation.app.R;
-import com.reservation.app.datasource.UserProfilePicture;
 import com.reservation.app.datasource.VenueDataManager;
 import com.reservation.app.datasource.helper.RemoteResult;
 import com.reservation.app.model.Address;
 import com.reservation.app.model.Venue;
-import com.reservation.app.ui.Profile;
 import com.reservation.app.ui.util.DialogBuilder;
 
 import org.jetbrains.annotations.NotNull;
@@ -186,6 +182,10 @@ public class AddVenueActivity extends AppCompatActivity {
         photoUrls.add(venueImageURL);
         venue.setPhotoUrls(photoUrls);
 
+        if (!isValidVenue(venue)) {
+            return;
+        }
+
         Dialog progressDialog = DialogBuilder.buildProgressDialog(this, "Saving...");
         progressDialog.show();
 
@@ -203,6 +203,50 @@ public class AddVenueActivity extends AppCompatActivity {
                 Toast.makeText(AddVenueActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private boolean isValidVenue(Venue venue) {
+        String require = getString(R.string.require);
+        boolean validValue = true;
+
+        if (TextUtils.isEmpty(venue.getName())) {
+            edtVenueName.setError(require);
+            validValue = false;
+        }
+
+        if (TextUtils.isEmpty(venue.getDescription())) {
+            edtVenueDescription.setError(require);
+            validValue = false;
+        }
+
+        if (TextUtils.isEmpty(venue.getPrice())) {
+            edtRentPrice.setError(require);
+            validValue = false;
+        }
+
+        if (venue.getSeatCapacity() <= 0) {
+            edtCapacity.setError(require);
+            validValue = false;
+        }
+
+        Address address = venue.getAddress();
+
+        if (TextUtils.isEmpty(address.getStreet1())) {
+            edtStreet1.setError(require);
+            validValue = false;
+        }
+
+        if (TextUtils.isEmpty(address.getCity())) {
+            edtCity.setError(require);
+            validValue = false;
+        }
+
+        if (TextUtils.isEmpty(address.getPostCode())) {
+            edtPostCode.setError(require);
+            validValue = false;
+        }
+
+        return validValue;
     }
 
     @Override
