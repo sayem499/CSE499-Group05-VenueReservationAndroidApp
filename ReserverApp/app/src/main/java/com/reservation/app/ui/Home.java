@@ -156,6 +156,7 @@ public class Home extends AppCompatActivity {
 
 
                         case R.id.menu_logout:
+                            firebaseAuth.signOut();
                         pref.logout();
                         startActivity(new Intent(getApplicationContext(),Login.class));
                         drawerLayout.closeDrawer(GravityCompat.START);
