@@ -155,13 +155,20 @@ public class Home extends AppCompatActivity {
                         break;
 
 
+                        case R.id.menu_chat:
+                        startActivity(new Intent(getApplicationContext(),ChatActivity.class));
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+
                         case R.id.menu_logout:
                             firebaseAuth.signOut();
-                        pref.logout();
-                        startActivity(new Intent(getApplicationContext(),Login.class));
-                        drawerLayout.closeDrawer(GravityCompat.START);
-                        finish();
-                        break;
+                            pref.logout();
+                            startActivity(new Intent(getApplicationContext(),Login.class));
+                            drawerLayout.closeDrawer(GravityCompat.START);
+                            finish();
+                            break;
+
+
 
 
                 }

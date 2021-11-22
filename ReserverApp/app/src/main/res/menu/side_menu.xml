@@ -18,6 +18,12 @@
 
     </item>
 
+    <item android:id="@+id/menu_chat"
+        android:icon="@drawable/ic_baseline_chat_24"
+        android:title="@string/chat">
+
+    </item>
+
     <item android:id="@+id/menu_logout"
         android:icon="@drawable/ic_baseline_login_24"
         android:title="@string/logout">
