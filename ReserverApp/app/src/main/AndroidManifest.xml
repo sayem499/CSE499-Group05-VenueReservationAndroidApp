@@ -13,10 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ReserverApp">
-        <activity android:name=".ui.ChatActivity">
+        <activity android:name=".ui.chat.ChatActivityMain"></activity>
+        <activity android:name=".ui.chat.ChatListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.reservation.app.ui.ChatActivity" />
+                android:value="com.reservation.app.ui.chat.ChatListActivity" />
         </activity>
         <activity android:name=".ui.venue.VenueActivity" />
         <activity android:name=".ui.Profile">

@@ -1,4 +1,4 @@
-package com.reservation.app.ui;
+package com.reservation.app.ui.chat;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,14 +8,14 @@ import com.reservation.app.R;
 
 import java.util.Objects;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatListActivity extends AppCompatActivity {
 
     private androidx.appcompat.widget.Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
+        setContentView(R.layout.activity_chat_list);
 
         toolbar = findViewById(R.id.chat_toolbar);
         setSupportActionBar(toolbar);

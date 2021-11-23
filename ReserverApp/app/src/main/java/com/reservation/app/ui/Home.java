@@ -34,6 +34,7 @@ import com.reservation.app.datasource.UserProfilePicture;
 import com.reservation.app.datasource.VenueDataManager;
 import com.reservation.app.datasource.helper.RemoteResult;
 import com.reservation.app.model.Venue;
+import com.reservation.app.ui.chat.ChatListActivity;
 import com.reservation.app.ui.util.DialogBuilder;
 import com.reservation.app.ui.venue.VenueActivity;
 import com.reservation.app.viewmodel.AppViewModel;
@@ -156,7 +157,7 @@ public class Home extends AppCompatActivity {
 
 
                         case R.id.menu_chat:
-                        startActivity(new Intent(getApplicationContext(),ChatActivity.class));
+                        startActivity(new Intent(getApplicationContext(), ChatListActivity.class));
                         drawerLayout.closeDrawer(GravityCompat.START);
                         break;
 
