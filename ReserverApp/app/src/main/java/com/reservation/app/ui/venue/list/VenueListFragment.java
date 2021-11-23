@@ -1,5 +1,7 @@
 package com.reservation.app.ui.venue.list;
 
+import static com.reservation.app.ui.venue.booking.VenueBookingActivity.EXTRA_VENUE;
+
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -90,6 +92,7 @@ public class VenueListFragment extends Fragment implements ItemClickListener<Ven
         Toast.makeText(getContext(), item.getName(), Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(getContext(), VenueBookingActivity.class);
+        intent.putExtra(EXTRA_VENUE, item);
 
         startActivity(intent);
     }

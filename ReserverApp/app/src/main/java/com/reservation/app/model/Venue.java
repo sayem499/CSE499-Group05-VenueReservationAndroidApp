@@ -1,12 +1,13 @@
 package com.reservation.app.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author Fatema
  * since 8/25/21.
  */
-public class Venue {
+public class Venue implements Serializable {
 
     private String id;
     private String userPhoneNumber;

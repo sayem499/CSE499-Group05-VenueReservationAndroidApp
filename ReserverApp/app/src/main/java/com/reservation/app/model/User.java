@@ -1,10 +1,12 @@
 package com.reservation.app.model;
 
+import java.io.Serializable;
+
 /**
  * @author Fatema
  * since 8/25/21.
  */
-public class User {
+public class User implements Serializable {
 
     private String id;
     private String firstName;
