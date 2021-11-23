@@ -1,6 +1,7 @@
 package com.reservation.app.ui.venue.list;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.reservation.app.datasource.helper.RemoteResult;
 import com.reservation.app.model.Venue;
 import com.reservation.app.ui.helper.ItemClickListener;
 import com.reservation.app.ui.util.DialogBuilder;
+import com.reservation.app.ui.venue.booking.VenueBookingActivity;
 import com.reservation.app.ui.venue.list.adapter.VenueAdapter;
 
 import org.jetbrains.annotations.NotNull;
@@ -86,5 +88,9 @@ public class VenueListFragment extends Fragment implements ItemClickListener<Ven
     @Override
     public void onItemClick(Venue item) {
         Toast.makeText(getContext(), item.getName(), Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(getContext(), VenueBookingActivity.class);
+
+        startActivity(intent);
     }
 }
