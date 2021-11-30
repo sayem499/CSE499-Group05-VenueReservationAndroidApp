@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="list_item_name">
+        <item>English</item>
+        <item>বাংলা</item>
+    </string-array>
+
+    <string-array name="list_item_values">
+        <item>English</item>
+        <item>বাংলা</item>
+    </string-array>
+
+</resources>

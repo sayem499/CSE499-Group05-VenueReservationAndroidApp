@@ -155,6 +155,12 @@ public class Home extends AppCompatActivity {
                         break;
 
 
+                        case R.id.menu_settings:
+                        startActivity(new Intent(getApplicationContext(),SettingsActivity.class));
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+
+
                         case R.id.menu_logout:
                             firebaseAuth.signOut();
                         pref.logout();
@@ -176,9 +182,7 @@ public class Home extends AppCompatActivity {
         setUserDataInSideMenu();
 
 
-
     }
-
     @SuppressLint("SetTextI18n")
     private void setUserDataInSideMenu() {
        if(userList != null) {

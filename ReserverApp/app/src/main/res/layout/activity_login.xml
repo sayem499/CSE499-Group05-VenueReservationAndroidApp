@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Phone Number"
+                android:text="@string/phone_number"
                 android:textAlignment="center"
                 android:textColor="#000000" />
 
@@ -42,7 +42,7 @@
                 style="@style/Widget.MaterialComponents.TextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Enter your phone number"
+                android:text="@string/enter_your_phone_number"
                 android:textAlignment="center" />
 
             <EditText
@@ -65,7 +65,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:gravity="clip_horizontal"
-                android:text="Continue" />
+                android:text="@string/continue_word" />
         </LinearLayout>
 
 
@@ -84,7 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Verification Code"
+                android:text="@string/verification_code"
                 android:textAlignment="center"
                 android:textColor="#000000" />
 
@@ -93,7 +93,7 @@
                 style="@style/Widget.MaterialComponents.TextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Enter the OTP code we sent to your number"
+                android:text="@string/enter_the_otp_code_we_sent_to_your_number"
                 android:textAlignment="center" />
 
             <EditText
@@ -121,7 +121,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:gravity="clip_horizontal"
-                android:text="Submit" />
+                android:text="@string/submit" />
         </LinearLayout>
 
 

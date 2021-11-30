@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">রিজার্ভার অ্যাপ</string>
+    <string name="title_activity_login">লগইন</string>
+<string name="prompt_email">ইমেইল</string>
+<string name="prompt_password">পাসওয়ার্ড</string>
+<string name="action_sign_in">সাইন ইন বা নিবন্ধন করুন</string>
+<string name="action_sign_in_short">সাইন ইন</string>
+<string name="welcome">"স্বাগত!"</string>
+<string name="invalid_username">একটি বৈধ ব্যবহারকারীর নাম নয়</string>
+<string name="invalid_password">পাসওয়ার্ড অবশ্যই >৫ অক্ষরের হতে হবে </string>
+<string name="login_failed">"লগইন ব্যর্থ"</string>
+<string name="didn_t_get_otp_resend">OTP পাননি?    <b>আবার পাঠান</b></string>
+<string name="home">হোম</string>
+<string name="profile">প্রোফাইল</string>
+<string name="logout">প্রস্থান</string>
+<string name="open">Open</string>
+<string name="close">Close</string>
+    <string name="bangla">বাংলা</string>
+    <string name="english">English</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+<string name="hello_blank_fragment">Hello blank fragment</string>
+<string name="venue_list">ভেন্যু তালিকা</string>
+<string name="venue_photo">ভেন্যু ছবি</string>
+<string name="settings">সেটিংস</string>
+<string name="title_activity_settings">সেটিংস</string>
+
+    <!-- Settings Title -->
+<string name="settings_languages">ভাষা</string>
+<string name="select_language">ভাষা নির্বাচন করুন</string>
+<string name="summery_select_language">অ্যাপ্লিকেশন ভাষা নির্বাচন করুন</string>
+    <string name="_880">+880</string>
+    <string name="mobile_number">মোবাইল নম্বর</string>
+    <string name="address">ঠিকানা</string>
+    <string name="email">ইমেইল</string>
+    <string name="edit_profile">জীবন বৃত্তান্ত সম্পাদনা</string>
+    <string name="phone_number">ফোন নম্বর</string>
+    <string name="enter_your_phone_number">আপনার ফোন নম্বর লিখুন</string>
+    <string name="continue_word">চালিয়ে যান</string>
+    <string name="verification_code">যাচাইকরণ কোড</string>
+    <string name="enter_the_otp_code_we_sent_to_your_number">আপনার নম্বরে আমাদের পাঠানো OTP কোডটি লিখুন</string>
+    <string name="submit">জমা দিন</string>
+
+
+</resources>
