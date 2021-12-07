@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ReserverApp">
-        <activity android:name=".ui.NotificationActivity"></activity>
+        <activity android:name=".ui.NotificationActivity">
+
+        </activity>
         <activity android:name=".ui.venue.VenueActivity" />
         <activity android:name=".ui.Profile">
             <meta-data
@@ -22,7 +24,8 @@
         </activity>
         <activity android:name=".ui.Home" />
         <activity android:name=".ui.Login" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,8 +34,8 @@
         </activity>
 
         <service
-            android:name=".MyFirebaseMessagingService"
-            android:exported="false">
+            android:name=".datasource.MyFirebaseMessagingService"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

@@ -7,10 +7,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.reservation.app.ui.Login;
 import com.reservation.app.viewmodel.AppViewModel;
 
@@ -53,5 +58,21 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         }, TIME1);
+
+        FirebaseMessaging.getInstance().subscribeToTopic("notify")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = "Success!";
+                        if (!task.isSuccessful()) {
+                            msg = "Failed!";
+                        }
+                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+
+                    }
+
+
+                });
+
     }
 }

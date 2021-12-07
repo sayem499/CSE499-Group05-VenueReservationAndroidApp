@@ -1,6 +1,7 @@
 package com.reservation.app.datasource;
 
-import android.app.NotificationManager;
+
+import android.annotation.SuppressLint;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -17,6 +18,7 @@ import java.util.Objects;
 
 
 
+@SuppressLint("MissingFirebaseInstanceTokenRefresh")
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
@@ -32,14 +34,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void getFirebaseMessage(String title,String message){
 
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,"myFirebaseChannel")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(),"myFirebaseChannel")
                 .setSmallIcon(R.drawable.ic_baseline_notifications_active_24)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setAutoCancel(true);
 
 
-        NotificationManagerCompat manager = NotificationManagerCompat.from(this);
+        NotificationManagerCompat manager = NotificationManagerCompat.from(getApplicationContext());
         manager.notify(499,builder.build());
 
     }
