@@ -16,17 +16,19 @@
         android:theme="@style/Theme.ReserverApp">
         <activity
             android:name=".ui.SettingsActivity"
-            android:label="@string/title_activity_settings">
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".ui.Home">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.reservation.app.ui.SettingsActivity" />
+                android:value="com.reservation.app.ui.Home" />
 
         </activity>
         <activity android:name=".ui.venue.VenueActivity" />
-        <activity android:name=".ui.Profile">
+        <activity android:name=".ui.Profile"
+            android:parentActivityName=".ui.Home">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.reservation.app.ui.Profile" />
+                android:value="com.reservation.app.ui.Home" />
         </activity>
         <activity android:name=".ui.Home" />
         <activity android:name=".ui.Login" />

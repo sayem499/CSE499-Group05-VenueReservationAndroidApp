@@ -13,7 +13,7 @@
 <string name="didn_t_get_otp_resend">OTP পাননি?    <b>আবার পাঠান</b></string>
 <string name="home">হোম</string>
 <string name="profile">প্রোফাইল</string>
-<string name="logout">প্রস্থান</string>
+<string name="logout">লগ আউট</string>
 <string name="open">Open</string>
 <string name="close">Close</string>
     <string name="bangla">বাংলা</string>

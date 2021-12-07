@@ -1,17 +1,21 @@
 package com.reservation.app.ui;
 
 import android.app.Activity;
+
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
-import androidx.appcompat.app.ActionBar;
+
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceManager;
 
+
+import com.reservation.app.MainActivity;
 import com.reservation.app.R;
 
 import java.util.Locale;
@@ -33,22 +37,40 @@ public class SettingsActivity extends AppCompatActivity {
                     .replace(R.id.settings, new SettingsFragment())
                     .commit();
         }
-        /*ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }*/
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            loadLocale();
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
             ListPreference listPreference = findPreference("select_language");
             assert listPreference != null;
             listPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    showLanguageSelectDialog();
+                    String s = listPreference.getValue();
+                    if(s.equals("English")){
+                        setLocale("en");
+                        requireActivity().recreate();
+                        /*PendingIntent pendingIntent = PendingIntent.getActivity(requireActivity(),1000,requireActivity().getIntent(),PendingIntent.FLAG_CANCEL_CURRENT);
+                        AlarmManager alarmManager = (AlarmManager)requireActivity().getSystemService(Context.ALARM_SERVICE);
+                        alarmManager.set(AlarmManager.RTC,System.currentTimeMillis() + 1000,pendingIntent);
+                        System.exit(0);*/
+
+
+                    }
+                    else if(s.equals("বাংলা")){
+                        setLocale("bn");
+                        requireActivity().recreate();
+                        /*PendingIntent pendingIntent = PendingIntent.getActivity(requireActivity(),1000,requireActivity().getIntent(),PendingIntent.FLAG_CANCEL_CURRENT);
+                        AlarmManager alarmManager = (AlarmManager)requireActivity().getSystemService(Context.ALARM_SERVICE);
+                        alarmManager.set(AlarmManager.RTC,System.currentTimeMillis() + 1000,pendingIntent);
+                        System.exit(0);*/
+
+
+                    }
+
                     return true;
                 }
             });
@@ -56,28 +78,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         }
 
-        private void showLanguageSelectDialog() {
-            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(requireContext());
-            String value = sp.getString("select_language","");
 
-
-                    if(value.equals("English")){
-                        setLocale("en");
-                        requireActivity().recreate();
-
-
-                    }
-                    else if(value.equals("বাংলা")){
-                        setLocale("bn");
-                        requireActivity().recreate();
-
-                    }
-
-
-
-
-
-        }
 
         private void setLocale(String s) {
             Locale locale = new Locale(s);
@@ -90,6 +91,11 @@ public class SettingsActivity extends AppCompatActivity {
             editor.apply();
         }
 
+        public void loadLocale(){
+            SharedPreferences prefs = requireActivity().getSharedPreferences("Settings", Activity.MODE_PRIVATE);
+            String language = prefs.getString("App_Lang","");
+            setLocale(language);
+        }
 
     }
 
@@ -109,6 +115,5 @@ public class SettingsActivity extends AppCompatActivity {
         String language = prefs.getString("App_Lang","");
         setLocale(language);
     }
-
 
 }
