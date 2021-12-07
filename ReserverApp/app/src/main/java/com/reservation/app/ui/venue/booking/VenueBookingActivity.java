@@ -6,10 +6,12 @@ import androidx.viewbinding.ViewBinding;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.reservation.app.R;
 import com.reservation.app.databinding.ActivityVenueBookingBinding;
 import com.reservation.app.model.Venue;
+import com.reservation.app.ui.util.DialogBuilder;
 import com.squareup.picasso.Picasso;
 
 import java.util.zip.Inflater;
@@ -19,6 +21,8 @@ public class VenueBookingActivity extends AppCompatActivity {
     public static final String EXTRA_VENUE = "extra_venue";
 
     private ActivityVenueBookingBinding viewBinding;
+
+    private Venue venue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +34,22 @@ public class VenueBookingActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        Venue venue = (Venue) intent.getSerializableExtra(EXTRA_VENUE);
+        venue = (Venue) intent.getSerializableExtra(EXTRA_VENUE);
 
-        updateVenueUi(venue);
+        listenBookingButton();
+        updateVenueUi();
     }
 
-    private void updateVenueUi(Venue venue) {
+    private void listenBookingButton() {
+        viewBinding.booking.setOnClickListener(v -> {
+            int index = viewBinding.venueSlot.getSelectedIndex();
+            if (index < 0) {
+                DialogBuilder.buildOkDialog(this, "Please select the venue slot").show();
+            }
+        });
+    }
+
+    private void updateVenueUi() {
         viewBinding.title.setText(venue.getName());
         viewBinding.address.setText(venue.getAddress().getDisplayAddressForList());
         viewBinding.price.setText(venue.getPrice());
@@ -51,6 +65,14 @@ public class VenueBookingActivity extends AppCompatActivity {
                     .error(R.drawable.placeholder1)
                     .into(viewBinding.photo);
         }
+    }
+
+    private String getSelectedSlot() {
+        int index = viewBinding.venueSlot.getSelectedIndex();
+
+        String[] slots = getResources().getStringArray(R.array.booking_slot);
+
+        return slots[index];
     }
 
 }
