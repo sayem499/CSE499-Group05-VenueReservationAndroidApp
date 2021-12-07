@@ -21,4 +21,11 @@
     <string name="venue_list">Venue List</string>
     <string name="venue_photo">Venue Photo</string>
     <string name="require">Require</string>
+    <string name="book_venue">Book Venue</string>
+
+    <array name="booking_slot">
+        <item>Day Shift</item>
+        <item>Night Shift</item>
+    </array>
+
 </resources>
