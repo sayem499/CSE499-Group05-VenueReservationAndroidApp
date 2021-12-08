@@ -3,6 +3,7 @@ package com.reservation.app.ui.util;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 
 import dmax.dialog.SpotsDialog;
 
@@ -13,9 +14,13 @@ import dmax.dialog.SpotsDialog;
 public class DialogBuilder {
 
     public static Dialog buildOkDialog(Context context, String message) {
+        return buildOkDialog(context, message, null);
+    }
+
+    public static Dialog buildOkDialog(Context context, String message, DialogInterface.OnClickListener listener) {
         return new AlertDialog
                 .Builder(context)
-                .setPositiveButton(android.R.string.ok, null)
+                .setPositiveButton(android.R.string.ok, listener)
                 .setMessage(message)
                 .create();
     }

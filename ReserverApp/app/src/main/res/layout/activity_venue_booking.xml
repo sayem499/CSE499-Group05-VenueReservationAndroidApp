@@ -82,6 +82,33 @@
             app:layout_constraintTop_toBottomOf="@id/address"
             tools:text="This is a very beautiful community center. I has large capacity. It has ac and non ac venue for any program. Please book it." />
 
+        <TextView
+            android:id="@+id/date_show"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="DD/MM/YYYY"
+            android:padding="8dp"
+            android:textAlignment="center"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/date_input"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/date_input"
+            app:layout_constraintTop_toTopOf="@id/date_input" />
+
+
+        <Button
+            android:id="@+id/date_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/gray_light"
+            android:text="Select Date"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/description" />
+
         <com.skydoves.powerspinner.PowerSpinnerView
             android:id="@+id/venue_slot"
             android:layout_width="match_parent"
@@ -96,7 +123,7 @@
             android:textSize="14.5sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/description"
+            app:layout_constraintTop_toBottomOf="@id/date_input"
             app:spinner_arrow_gravity="end"
             app:spinner_arrow_padding="8dp"
             app:spinner_divider_color="@color/gray"

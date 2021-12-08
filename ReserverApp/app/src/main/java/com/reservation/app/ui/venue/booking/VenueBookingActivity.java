@@ -1,20 +1,30 @@
 package com.reservation.app.ui.venue.booking;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewbinding.ViewBinding;
-
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.DatePicker;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.common.util.CollectionUtils;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.reservation.app.R;
 import com.reservation.app.databinding.ActivityVenueBookingBinding;
+import com.reservation.app.model.BookingInfo;
 import com.reservation.app.model.Venue;
 import com.reservation.app.ui.util.DialogBuilder;
 import com.squareup.picasso.Picasso;
 
-import java.util.zip.Inflater;
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class VenueBookingActivity extends AppCompatActivity {
 
@@ -23,6 +33,8 @@ public class VenueBookingActivity extends AppCompatActivity {
     private ActivityVenueBookingBinding viewBinding;
 
     private Venue venue;
+    private Date selectedDate;
+    private FirebaseUser firebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +47,30 @@ public class VenueBookingActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         venue = (Venue) intent.getSerializableExtra(EXTRA_VENUE);
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
+        listenDateInput();
         listenBookingButton();
+
         updateVenueUi();
+    }
+
+    private void listenDateInput() {
+        viewBinding.dateInput.setOnClickListener(v -> {
+            final Calendar calendar = Calendar.getInstance();
+            int mYear = calendar.get(Calendar.YEAR);
+            int mMonth = calendar.get(Calendar.MONTH);
+            int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                    (view, year, monthOfYear, dayOfMonth) -> {
+                        viewBinding.dateShow.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                        calendar.set(mYear, mMonth, mYear);
+                        selectedDate = calendar.getTime();
+                    }, mYear, mMonth, mDay);
+            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+            datePickerDialog.show();
+        });
     }
 
     private void listenBookingButton() {
@@ -45,8 +78,36 @@ public class VenueBookingActivity extends AppCompatActivity {
             int index = viewBinding.venueSlot.getSelectedIndex();
             if (index < 0) {
                 DialogBuilder.buildOkDialog(this, "Please select the venue slot").show();
+            } else if (viewBinding.dateShow.getText().toString().equals("DD/MM/YYYY")){
+                DialogBuilder.buildOkDialog(this, "Please select date").show();
+            } else {
+                boolean isSuccess = bookVenue();
+
+                if (isSuccess) {
+                    Dialog dialog = DialogBuilder.buildOkDialog(this, "Booking is Successful",
+                            (d, which) -> {
+                                finish();
+                            }
+                    );
+                    dialog.setCancelable(false);
+                    dialog.show();
+                }
             }
         });
+    }
+
+    private boolean bookVenue() {
+        //update bookedSlots
+        BookingInfo bookingInfo = new BookingInfo();
+        bookingInfo.setSlot(getSelectedSlot());
+        bookingInfo.setVenueId(venue.getId());
+        bookingInfo.setDate(selectedDate);
+
+        if (firebaseUser != null) {
+            bookingInfo.setUserId(firebaseUser.getPhoneNumber());
+        }
+
+        return true;
     }
 
     private void updateVenueUi() {
