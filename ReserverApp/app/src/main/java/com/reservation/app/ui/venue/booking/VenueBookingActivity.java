@@ -5,26 +5,23 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.DatePicker;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.common.util.CollectionUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.reservation.app.R;
 import com.reservation.app.databinding.ActivityVenueBookingBinding;
+import com.reservation.app.datasource.VenueDataManager;
+import com.reservation.app.datasource.helper.RemoteResult;
 import com.reservation.app.model.BookingInfo;
 import com.reservation.app.model.Venue;
 import com.reservation.app.ui.util.DialogBuilder;
 import com.squareup.picasso.Picasso;
 
-import java.sql.Array;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 public class VenueBookingActivity extends AppCompatActivity {
 
@@ -78,20 +75,10 @@ public class VenueBookingActivity extends AppCompatActivity {
             int index = viewBinding.venueSlot.getSelectedIndex();
             if (index < 0) {
                 DialogBuilder.buildOkDialog(this, "Please select the venue slot").show();
-            } else if (viewBinding.dateShow.getText().toString().equals("DD/MM/YYYY")){
+            } else if (viewBinding.dateShow.getText().toString().equals("DD/MM/YYYY")) {
                 DialogBuilder.buildOkDialog(this, "Please select date").show();
             } else {
-                boolean isSuccess = bookVenue();
-
-                if (isSuccess) {
-                    Dialog dialog = DialogBuilder.buildOkDialog(this, "Booking is Successful",
-                            (d, which) -> {
-                                finish();
-                            }
-                    );
-                    dialog.setCancelable(false);
-                    dialog.show();
-                }
+                bookVenue();
             }
         });
     }
@@ -106,6 +93,24 @@ public class VenueBookingActivity extends AppCompatActivity {
         if (firebaseUser != null) {
             bookingInfo.setUserId(firebaseUser.getPhoneNumber());
         }
+
+        VenueDataManager.saveBookingInfo(bookingInfo, new RemoteResult<BookingInfo>() {
+            @Override
+            public void onSuccess(BookingInfo data) {
+                Dialog dialog = DialogBuilder.buildOkDialog(VenueBookingActivity.this, "Booking is Successful",
+                        (d, which) -> {
+                            finish();
+                        }
+                );
+                dialog.setCancelable(false);
+                dialog.show();
+            }
+
+            @Override
+            public void onFailure(Exception error) {
+                Toast.makeText(VenueBookingActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return true;
     }

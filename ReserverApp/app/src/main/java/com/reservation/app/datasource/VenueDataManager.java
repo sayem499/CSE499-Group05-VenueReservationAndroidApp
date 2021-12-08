@@ -6,6 +6,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.reservation.app.datasource.helper.RemoteResult;
+import com.reservation.app.model.BookingInfo;
 import com.reservation.app.model.Venue;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class VenueDataManager {
 
     private static final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private static final DatabaseReference venueRef = database.getReference("venues");
+    private static final DatabaseReference bookingRef = database.getReference("bookings");
 
     static public void requestVenueList(RemoteResult<List<Venue>> resultCallback) {
 
@@ -57,6 +59,19 @@ public class VenueDataManager {
 
             } else {
                 resultCallBack.onSuccess(venue);
+            }
+        });
+    }
+
+    public static void saveBookingInfo(BookingInfo bookingInfo, RemoteResult<BookingInfo> resultCallBack) {
+
+        bookingRef.push().setValue(bookingInfo).addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                Log.d("firebase", String.valueOf(task.getResult()));
+                resultCallBack.onFailure(task.getException());
+
+            } else {
+                resultCallBack.onSuccess(bookingInfo);
             }
         });
     }
