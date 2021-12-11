@@ -154,6 +154,11 @@ public class Home extends AppCompatActivity {
                         drawerLayout.closeDrawer(GravityCompat.START);
                         break;
 
+                        case R.id.menu_notifications:
+                        startActivity(new Intent(getApplicationContext(),NotificationActivity.class));
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+
 
                         case R.id.menu_logout:
                             firebaseAuth.signOut();

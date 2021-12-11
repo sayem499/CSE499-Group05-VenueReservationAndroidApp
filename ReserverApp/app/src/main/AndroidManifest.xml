@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.reservation.app">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,18 +14,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ReserverApp">
-        <activity android:name=".ui.NotificationActivity">
+        <activity android:name=".ui.NotificationSenderActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.reservation.app.ui.NotificationActivity" />
 
+        </activity>
+        <activity android:name=".ui.NotificationActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.reservation.app.ui.Home" />
         </activity>
         <activity android:name=".ui.venue.VenueActivity" />
         <activity android:name=".ui.Profile">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.reservation.app.ui.Profile" />
+                android:value="com.reservation.app.ui.Home" />
         </activity>
         <activity android:name=".ui.Home" />
         <activity android:name=".ui.Login" />
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,7 +45,9 @@
 
         <service
             android:name=".datasource.MyFirebaseMessagingService"
-            android:exported="true">
+            android:permission="TODO"
+            android:exported="true"
+            tools:ignore="ExportedServices">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
