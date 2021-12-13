@@ -2,6 +2,7 @@ package com.reservation.app.datasource;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -23,6 +24,7 @@ public class FcmNotificationsSender {
     String userFcmToken;
     String title;
     String body;
+    String image;
     Context mContext;
     Activity mActivity;
 
@@ -31,10 +33,11 @@ public class FcmNotificationsSender {
     private final String fcmServerKey = "AAAAndCbZlI:APA91bGM2vI9O6wbxuxhPekUwmKf5yeo026JCm7EmWQCtgcPTP79Gx3Qm2GRRpPpcH1tsHa9pBSs0ukRIwqg98noA455AqRPbg_5rzXg1GmeAoEchIYMtAGX_q845rQccwHJgKiNtsGw";
 
 
-    public FcmNotificationsSender(String userFcmToken, String title, String body, Context mContext, Activity mActivity) {
+    public FcmNotificationsSender(String userFcmToken, String title, String body, String image, Context mContext, Activity mActivity) {
         this.userFcmToken = userFcmToken;
         this.title = title;
         this.body = body;
+        this.image = image;
         this.mContext = mContext;
         this.mActivity = mActivity;
     }
@@ -49,6 +52,7 @@ public class FcmNotificationsSender {
             JSONObject notifyObject = new JSONObject();
             notifyObject.put("title", title);
             notifyObject.put("body", body);
+            notifyObject.put("image",image);
             notifyObject.put("icon", R.drawable.ic_baseline_notifications_active_24);
 
             mainObj.put("notification", notifyObject);
