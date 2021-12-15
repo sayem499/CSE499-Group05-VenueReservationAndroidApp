@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.reservation.app.R;
 import com.reservation.app.datasource.SharedPrefManager;
 import com.reservation.app.ui.venue.add.AddVenueActivity;
+import com.reservation.app.ui.venue.booking.VenueBookingListActivity;
 
 
 public class Home extends AppCompatActivity {
@@ -80,6 +81,11 @@ public class Home extends AppCompatActivity {
 
                         case R.id.menu_add_venue:
                         startActivity(new Intent(getApplicationContext(), AddVenueActivity.class));
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+
+                    case R.id.menu_booking:
+                        startActivity(new Intent(getApplicationContext(), VenueBookingListActivity.class));
                         drawerLayout.closeDrawer(GravityCompat.START);
                         break;
 

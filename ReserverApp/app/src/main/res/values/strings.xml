@@ -22,6 +22,7 @@
     <string name="venue_photo">Venue Photo</string>
     <string name="require">Require</string>
     <string name="book_venue">Book Venue</string>
+    <string name="booking">Booking</string>
 
     <array name="booking_slot">
         <item>Day Shift</item>

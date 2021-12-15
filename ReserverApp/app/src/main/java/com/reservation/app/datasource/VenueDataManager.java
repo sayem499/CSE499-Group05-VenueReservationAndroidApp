@@ -79,6 +79,33 @@ public class VenueDataManager {
         });
     }
 
+    static public void requestBookingList(String userId, RemoteResult<List<BookingInfo>> resultCallback) {
+
+        bookingRef.get().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                resultCallback.onFailure(task.getException());
+
+                Log.e("firebase", "Error getting data", task.getException());
+            } else {
+                if (task.getResult() == null) {
+                    resultCallback.onFailure(new Exception("Not receive formatted result."));
+                    return;
+                }
+                List<BookingInfo> bookingInfoList = new ArrayList<>();
+
+                for (DataSnapshot venueTask : task.getResult().getChildren()) {
+                    BookingInfo bookingInfo = venueTask.getValue(BookingInfo.class);
+
+                    if (bookingInfo != null && bookingInfo.getUserId().equals(userId)) {
+                        bookingInfoList.add(bookingInfo);
+                    }
+                }
+                resultCallback.onSuccess(bookingInfoList);
+                Log.d("firebase", String.valueOf(task.getResult().getValue()));
+            }
+        });
+    }
+
     static public void requestBookedDates(String venueId, RemoteResult<List<Calendar>> resultCallback) {
 
         bookingRef.get().addOnCompleteListener(task -> {
@@ -91,16 +118,16 @@ public class VenueDataManager {
                     resultCallback.onFailure(new Exception("Not receive formatted result."));
                     return;
                 }
-                List<Calendar> venues = new ArrayList<>();
+                List<Calendar> bookedDates = new ArrayList<>();
 
                 for (DataSnapshot venueTask : task.getResult().getChildren()) {
                     BookingInfo bookingInfo = venueTask.getValue(BookingInfo.class);
 
                     if (bookingInfo != null && bookingInfo.getVenueId().equals(venueId)) {
-                        venues.add(dateToCalendar(bookingInfo.getDate()));
+                        bookedDates.add(dateToCalendar(bookingInfo.getDate()));
                     }
                 }
-                resultCallback.onSuccess(venues);
+                resultCallback.onSuccess(bookedDates);
                 Log.d("firebase", String.valueOf(task.getResult().getValue()));
             }
         });

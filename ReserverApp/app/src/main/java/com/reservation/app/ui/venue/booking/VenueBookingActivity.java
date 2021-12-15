@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.common.util.CollectionUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.reservation.app.R;
@@ -104,7 +105,12 @@ public class VenueBookingActivity extends AppCompatActivity {
         BookingInfo bookingInfo = new BookingInfo();
         bookingInfo.setSlot(getSelectedSlot());
         bookingInfo.setVenueId(venue.getId());
+        bookingInfo.setTitle(venue.getName());
         bookingInfo.setDate(selectedDate);
+
+        if (!CollectionUtils.isEmpty(venue.getPhotoUrls())) {
+            bookingInfo.setPhotoUrl(venue.getPhotoUrls().get(0));
+        }
 
         if (firebaseUser != null) {
             bookingInfo.setUserId(firebaseUser.getPhoneNumber());
