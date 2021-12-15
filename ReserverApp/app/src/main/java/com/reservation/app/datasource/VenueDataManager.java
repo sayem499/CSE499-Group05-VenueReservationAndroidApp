@@ -1,6 +1,10 @@
 package com.reservation.app.datasource;
 
+import static com.reservation.app.ui.venue.booking.VenueBookingActivity.DAY_SHIFT;
+import static com.reservation.app.ui.venue.booking.VenueBookingActivity.NIGHT_SHIFT;
+import static com.reservation.app.util.DateTimeUtils.checkDate;
 import static com.reservation.app.util.DateTimeUtils.dateToCalendar;
+import static com.reservation.app.util.DateTimeUtils.dateToStr;
 
 import android.util.Log;
 
@@ -13,7 +17,10 @@ import com.reservation.app.model.Venue;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Fatema
@@ -106,6 +113,37 @@ public class VenueDataManager {
         });
     }
 
+    static public void requestBookedSlot(String venueId, Date date, RemoteResult<List<String>> resultCallback) {
+
+        bookingRef.get().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                resultCallback.onFailure(task.getException());
+
+                Log.e("firebase", "Error getting data", task.getException());
+            } else {
+                if (task.getResult() == null) {
+                    resultCallback.onFailure(new Exception("Not receive formatted result."));
+                    return;
+                }
+                List<String> bookedSlots = new ArrayList<>();
+                bookedSlots.add(DAY_SHIFT);
+                bookedSlots.add(NIGHT_SHIFT);
+
+                for (DataSnapshot venueTask : task.getResult().getChildren()) {
+                    BookingInfo bookingInfo = venueTask.getValue(BookingInfo.class);
+
+                    if (bookingInfo != null
+                            && bookingInfo.getVenueId().equals(venueId)
+                            && checkDate(bookingInfo.getDate(), date)) {
+                        bookedSlots.remove(bookingInfo.getSlot());
+                    }
+                }
+                resultCallback.onSuccess(bookedSlots);
+                Log.d("firebase", String.valueOf(task.getResult().getValue()));
+            }
+        });
+    }
+
     static public void requestBookedDates(String venueId, RemoteResult<List<Calendar>> resultCallback) {
 
         bookingRef.get().addOnCompleteListener(task -> {
@@ -119,12 +157,19 @@ public class VenueDataManager {
                     return;
                 }
                 List<Calendar> bookedDates = new ArrayList<>();
+                Set<String> slots = new HashSet<>();
 
                 for (DataSnapshot venueTask : task.getResult().getChildren()) {
                     BookingInfo bookingInfo = venueTask.getValue(BookingInfo.class);
 
                     if (bookingInfo != null && bookingInfo.getVenueId().equals(venueId)) {
-                        bookedDates.add(dateToCalendar(bookingInfo.getDate()));
+                        String dateStr = dateToStr(bookingInfo.getDate());
+
+                        if (slots.contains(dateStr)) {
+                            bookedDates.add(dateToCalendar(bookingInfo.getDate()));
+                        } else {
+                            slots.add(dateStr);
+                        }
                     }
                 }
                 resultCallback.onSuccess(bookedDates);

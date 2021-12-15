@@ -28,6 +28,8 @@ import java.util.List;
 public class VenueBookingActivity extends AppCompatActivity {
 
     public static final String EXTRA_VENUE = "extra_venue";
+    public static final String DAY_SHIFT = "Day Shift";
+    public static final String NIGHT_SHIFT = "Night Shift";
 
     private ActivityVenueBookingBinding viewBinding;
 
@@ -47,6 +49,7 @@ public class VenueBookingActivity extends AppCompatActivity {
 
         venue = (Venue) intent.getSerializableExtra(EXTRA_VENUE);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        selectedDate = Calendar.getInstance().getTime();
 
         listenDateInput();
         listenBookingButton();
@@ -65,9 +68,25 @@ public class VenueBookingActivity extends AppCompatActivity {
                 viewBinding.dateShow.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                 calendar.set(year, monthOfYear, dayOfMonth);
                 selectedDate = calendar.getTime();
+                setVenueSlot();
             }, mYear, mMonth, mDay);
             datePickerDialog.setMinDate(Calendar.getInstance());
             setDisabledDays(datePickerDialog);
+        });
+    }
+
+    private void setVenueSlot() {
+        VenueDataManager.requestBookedSlot(venue.getId(), selectedDate, new RemoteResult<List<String>>() {
+
+            @Override
+            public void onSuccess(List<String> data) {
+                viewBinding.venueSlot.setItems(data);
+            }
+
+            @Override
+            public void onFailure(Exception error) {
+                DialogBuilder.buildOkDialog(VenueBookingActivity.this, error.getMessage()).show();
+            }
         });
     }
 
@@ -90,10 +109,11 @@ public class VenueBookingActivity extends AppCompatActivity {
     private void listenBookingButton() {
         viewBinding.booking.setOnClickListener(v -> {
             int index = viewBinding.venueSlot.getSelectedIndex();
-            if (index < 0) {
-                DialogBuilder.buildOkDialog(this, "Please select the venue slot").show();
-            } else if (viewBinding.dateShow.getText().toString().equals("DD/MM/YYYY")) {
+
+            if (viewBinding.dateShow.getText().toString().equals("DD/MM/YYYY")) {
                 DialogBuilder.buildOkDialog(this, "Please select date").show();
+            } else if (index < 0) {
+                DialogBuilder.buildOkDialog(this, "Please select the venue slot").show();
             } else {
                 bookVenue();
             }
