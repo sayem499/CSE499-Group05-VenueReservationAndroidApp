@@ -1,6 +1,5 @@
 package com.reservation.app.ui.venue.booking;
 
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,9 +18,11 @@ import com.reservation.app.model.BookingInfo;
 import com.reservation.app.model.Venue;
 import com.reservation.app.ui.util.DialogBuilder;
 import com.squareup.picasso.Picasso;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class VenueBookingActivity extends AppCompatActivity {
 
@@ -59,14 +60,29 @@ public class VenueBookingActivity extends AppCompatActivity {
             int mMonth = calendar.get(Calendar.MONTH);
             int mDay = calendar.get(Calendar.DAY_OF_MONTH);
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                    (view, year, monthOfYear, dayOfMonth) -> {
-                        viewBinding.dateShow.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                        calendar.set(mYear, mMonth, mYear);
-                        selectedDate = calendar.getTime();
-                    }, mYear, mMonth, mDay);
-            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-            datePickerDialog.show();
+            DatePickerDialog datePickerDialog = DatePickerDialog.newInstance((view, year, monthOfYear, dayOfMonth) -> {
+                viewBinding.dateShow.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                calendar.set(year, monthOfYear, dayOfMonth);
+                selectedDate = calendar.getTime();
+            }, mYear, mMonth, mDay);
+            datePickerDialog.setMinDate(Calendar.getInstance());
+            setDisabledDays(datePickerDialog);
+        });
+    }
+
+    private void setDisabledDays(DatePickerDialog datePickerDialog) {
+        VenueDataManager.requestBookedDates(venue.getId(), new RemoteResult<List<Calendar>>() {
+
+            @Override
+            public void onSuccess(List<Calendar> data) {
+                datePickerDialog.setDisabledDays(data.toArray(new Calendar[data.size()]));
+                datePickerDialog.show(getSupportFragmentManager(), "Select Date");
+            }
+
+            @Override
+            public void onFailure(Exception error) {
+                DialogBuilder.buildOkDialog(VenueBookingActivity.this, error.getMessage()).show();
+            }
         });
     }
 

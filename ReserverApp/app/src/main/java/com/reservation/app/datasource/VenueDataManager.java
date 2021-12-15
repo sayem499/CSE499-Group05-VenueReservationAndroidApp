@@ -1,5 +1,7 @@
 package com.reservation.app.datasource;
 
+import static com.reservation.app.util.DateTimeUtils.dateToCalendar;
+
 import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
@@ -10,6 +12,7 @@ import com.reservation.app.model.BookingInfo;
 import com.reservation.app.model.Venue;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -75,4 +78,32 @@ public class VenueDataManager {
             }
         });
     }
+
+    static public void requestBookedDates(String venueId, RemoteResult<List<Calendar>> resultCallback) {
+
+        bookingRef.get().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                resultCallback.onFailure(task.getException());
+
+                Log.e("firebase", "Error getting data", task.getException());
+            } else {
+                if (task.getResult() == null) {
+                    resultCallback.onFailure(new Exception("Not receive formatted result."));
+                    return;
+                }
+                List<Calendar> venues = new ArrayList<>();
+
+                for (DataSnapshot venueTask : task.getResult().getChildren()) {
+                    BookingInfo bookingInfo = venueTask.getValue(BookingInfo.class);
+
+                    if (bookingInfo != null && bookingInfo.getVenueId().equals(venueId)) {
+                        venues.add(dateToCalendar(bookingInfo.getDate()));
+                    }
+                }
+                resultCallback.onSuccess(venues);
+                Log.d("firebase", String.valueOf(task.getResult().getValue()));
+            }
+        });
+    }
+
 }
