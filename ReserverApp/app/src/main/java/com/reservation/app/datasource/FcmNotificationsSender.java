@@ -2,7 +2,6 @@ package com.reservation.app.datasource;
 
 import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -81,6 +80,8 @@ public class FcmNotificationsSender {
 
             };
             requestQueue.add(request);
+
+
 
 
         } catch (JSONException e) {

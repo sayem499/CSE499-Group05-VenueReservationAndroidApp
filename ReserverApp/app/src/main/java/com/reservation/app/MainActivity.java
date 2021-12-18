@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.reservation.app.ui.Login;
+import com.reservation.app.ui.NotificationActivity;
 import com.reservation.app.viewmodel.AppViewModel;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -36,7 +37,10 @@ public class MainActivity extends AppCompatActivity {
                 .getInstance(this.getApplication())).get(AppViewModel.class);
         appViewModel.initUserData();
         appViewModel.initUserProfilePicture();
+        appViewModel.initNotifications(this);
+
         splashImage = findViewById(R.id.splash_screen_image);
+
 
         logoText1 = findViewById(R.id.reserver_app_logo);
         logoText2 = findViewById(R.id.textView8);
@@ -67,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             msg = "Failed!";
                         }
-                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
 
                     }
 

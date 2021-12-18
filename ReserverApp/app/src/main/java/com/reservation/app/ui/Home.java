@@ -124,8 +124,6 @@ public class Home extends AppCompatActivity {
             }
         });
 
-        recyclerView.setAdapter(searchRecyclerAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(Home.this));
 
 
 
