@@ -5,12 +5,12 @@
     <PreferenceCategory app:title="@string/settings_languages">
 
         <ListPreference
-            app:key="select_language"
             app:title="@string/select_language"
-            app:summary="@string/summery_select_language"
+            app:defaultValue="English"
             app:entries="@array/list_item_name"
             app:entryValues="@array/list_item_values"
-            app:defaultValue="English">
+            app:key="select_language"
+            app:summary="@string/summery_select_language">
 
         </ListPreference>
 

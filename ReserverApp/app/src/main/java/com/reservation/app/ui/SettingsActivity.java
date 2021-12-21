@@ -1,19 +1,17 @@
 package com.reservation.app.ui;
 
 import android.app.Activity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
-
-
+import android.util.DisplayMetrics;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
-
 
 import com.reservation.app.MainActivity;
 import com.reservation.app.R;
@@ -42,33 +40,21 @@ public class SettingsActivity extends AppCompatActivity {
     public static class SettingsFragment extends PreferenceFragmentCompat {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            loadLocale();
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
             ListPreference listPreference = findPreference("select_language");
             assert listPreference != null;
             listPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    String s = listPreference.getValue();
+                    String s = newValue.toString();
                     if(s.equals("English")){
                         setLocale("en");
                         requireActivity().recreate();
-                        /*PendingIntent pendingIntent = PendingIntent.getActivity(requireActivity(),1000,requireActivity().getIntent(),PendingIntent.FLAG_CANCEL_CURRENT);
-                        AlarmManager alarmManager = (AlarmManager)requireActivity().getSystemService(Context.ALARM_SERVICE);
-                        alarmManager.set(AlarmManager.RTC,System.currentTimeMillis() + 1000,pendingIntent);
-                        System.exit(0);*/
-
 
                     }
                     else if(s.equals("বাংলা")){
                         setLocale("bn");
                         requireActivity().recreate();
-                        /*PendingIntent pendingIntent = PendingIntent.getActivity(requireActivity(),1000,requireActivity().getIntent(),PendingIntent.FLAG_CANCEL_CURRENT);
-                        AlarmManager alarmManager = (AlarmManager)requireActivity().getSystemService(Context.ALARM_SERVICE);
-                        alarmManager.set(AlarmManager.RTC,System.currentTimeMillis() + 1000,pendingIntent);
-                        System.exit(0);*/
-
-
                     }
 
                     return true;
@@ -78,23 +64,17 @@ public class SettingsActivity extends AppCompatActivity {
 
         }
 
-
-
         private void setLocale(String s) {
             Locale locale = new Locale(s);
             Locale.setDefault(locale);
-            Configuration config =  new Configuration();
+            Resources res = getResources();
+            DisplayMetrics dm = res.getDisplayMetrics();
+            Configuration config =  res.getConfiguration();
             config.locale = locale;
-            requireActivity().getBaseContext().getResources().updateConfiguration(config,requireActivity().getBaseContext().getResources().getDisplayMetrics());
+            res.updateConfiguration(config,dm);
             SharedPreferences.Editor editor = requireActivity().getSharedPreferences("Settings",MODE_PRIVATE).edit();
             editor.putString("App_Lang",s);
             editor.apply();
-        }
-
-        public void loadLocale(){
-            SharedPreferences prefs = requireActivity().getSharedPreferences("Settings", Activity.MODE_PRIVATE);
-            String language = prefs.getString("App_Lang","");
-            setLocale(language);
         }
 
     }
@@ -102,9 +82,11 @@ public class SettingsActivity extends AppCompatActivity {
     private void setLocale(String s) {
         Locale locale = new Locale(s);
         Locale.setDefault(locale);
-        Configuration config =  new Configuration();
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration config =  res.getConfiguration();
         config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config,getBaseContext().getResources().getDisplayMetrics());
+        res.updateConfiguration(config,dm);
         SharedPreferences.Editor editor = getSharedPreferences("Settings",MODE_PRIVATE).edit();
         editor.putString("App_Lang",s);
         editor.apply();

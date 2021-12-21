@@ -3,11 +3,16 @@ package com.reservation.app;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.util.DisplayMetrics;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +25,8 @@ import com.reservation.app.ui.Login;
 import com.reservation.app.ui.NotificationActivity;
 import com.reservation.app.viewmodel.AppViewModel;
 
+import java.util.Locale;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadLocale();
         setContentView(R.layout.activity_main);
 
         appViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
@@ -77,5 +85,25 @@ public class MainActivity extends AppCompatActivity {
 
                 });
 
+
     }
+    private void setLocale(String s) {
+        Locale locale = new Locale(s);
+        Locale.setDefault(locale);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration config =  res.getConfiguration();
+        config.locale = locale;
+        res.updateConfiguration(config,dm);
+        SharedPreferences.Editor editor = getSharedPreferences("Settings",MODE_PRIVATE).edit();
+        editor.putString("App_Lang",s);
+        editor.apply();
+    }
+
+    public void loadLocale(){
+        SharedPreferences prefs = getSharedPreferences("Settings", Activity.MODE_PRIVATE);
+        String language = prefs.getString("App_Lang","");
+        setLocale(language);
+    }
+
 }

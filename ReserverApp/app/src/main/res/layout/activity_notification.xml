@@ -16,7 +16,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Notifications"
+        app:title="@string/notifications"
         app:titleTextColor="#03101B">
 
     </androidx.appcompat.widget.Toolbar>
@@ -40,7 +40,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/notification_toolbar"
         app:layout_constraintVertical_bias="0.909"
-        app:srcCompat="@drawable/ic_baseline_add_alert_24" />
+        app:srcCompat="@drawable/ic_baseline_add_alert_24"
+        android:focusable="true" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

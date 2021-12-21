@@ -20,7 +20,7 @@
             android:layout_marginRight="16dp"
             android:background="@drawable/edittext_design"
             android:ems="10"
-            android:hint="First Name"
+            android:hint="@string/first_name"
             android:inputType="textPersonName"
             android:textAlignment="center" />
 
@@ -34,7 +34,7 @@
             android:layout_marginRight="16dp"
             android:background="@drawable/edittext_design"
             android:ems="10"
-            android:hint="Last Name"
+            android:hint="@string/last_name"
             android:inputType="textPersonName"
             android:textAlignment="center" />
 
@@ -47,7 +47,7 @@
             android:layout_marginRight="16dp"
             android:background="@drawable/edittext_design"
             android:ems="10"
-            android:hint="Email"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:textAlignment="center" />
 
@@ -61,7 +61,7 @@
             android:background="@drawable/edittext_design"
             android:ems="10"
             android:gravity="center_horizontal"
-            android:hint="Address"
+            android:hint="@string/address"
             android:inputType="textMultiLine"
             android:textAlignment="center" />
 
@@ -73,7 +73,7 @@
             android:layout_marginTop="100dp"
             android:layout_marginRight="40dp"
             android:backgroundTint="#CCDA81"
-            android:text="Update" />
+            android:text="@string/update" />
 
     </LinearLayout>
 

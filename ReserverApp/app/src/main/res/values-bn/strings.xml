@@ -43,5 +43,15 @@
     <string name="enter_the_otp_code_we_sent_to_your_number">আপনার নম্বরে আমাদের পাঠানো OTP কোডটি লিখুন</string>
     <string name="submit">জমা দিন</string>
 
+    <string name="notifications">বিজ্ঞপ্তি</string>
+    <string name="send_notification">বিজ্ঞপ্তি পাঠান</string>
+    <string name="title">শিরোনাম</string>
+    <string name="image_url">ছবির ঠিকানা</string>
+    <string name="message">বার্তা</string>
+    <string name="send">পাঠান</string>
+    <string name="update">হালনাগাদ</string>
+    <string name="first_name">নামের প্রথম অংশ</string>
+    <string name="last_name">নামের শেষাংশ</string>
+
 
 </resources>

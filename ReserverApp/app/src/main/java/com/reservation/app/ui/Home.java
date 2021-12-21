@@ -16,7 +16,9 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,6 +46,7 @@ import com.reservation.app.viewmodel.AppViewModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -72,7 +75,6 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadLocale();
         setContentView(R.layout.activity_home);
         pref = new SharedPrefManager(Home.this);
         firebaseAuth = FirebaseAuth.getInstance();
@@ -92,6 +94,7 @@ public class Home extends AppCompatActivity {
 
         toolbar = findViewById(R.id.home_toolbar);
         setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setTitle(null);
 
         navigationView = findViewById(R.id.home_nav_menu);
         drawerLayout = findViewById(R.id.home_drawer);
@@ -145,12 +148,6 @@ public class Home extends AppCompatActivity {
                         drawerLayout.closeDrawer(GravityCompat.START);
                         finish();
                         break;
-
-                        case R.id.menu_venue_List:
-                        startActivity(new Intent(getApplicationContext(), VenueActivity.class));
-                        drawerLayout.closeDrawer(GravityCompat.START);
-                        break;
-
 
                         case R.id.menu_profile:
                         startActivity(new Intent(getApplicationContext(),Profile.class));
@@ -260,22 +257,7 @@ public class Home extends AppCompatActivity {
         });
     }
 
-    private void setLocale(String s) {
-        Locale locale = new Locale(s);
-        Locale.setDefault(locale);
-        Configuration config =  new Configuration();
-        config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config,getBaseContext().getResources().getDisplayMetrics());
-        SharedPreferences.Editor editor = getSharedPreferences("Settings",MODE_PRIVATE).edit();
-        editor.putString("App_Lang",s);
-        editor.apply();
-    }
 
-    public void loadLocale(){
-        SharedPreferences prefs = getSharedPreferences("Settings", Activity.MODE_PRIVATE);
-        String language = prefs.getString("App_Lang","");
-        setLocale(language);
-    }
 }
 
 
