@@ -24,7 +24,8 @@
             android:layout_marginEnd="0dp"
             android:background="#cddb7f"
             android:textAlignment="center"
-            app:titleTextColor="#03101B">
+            app:titleTextColor="#03101B"
+            app:title="@string/app_name">
 
         </androidx.appcompat.widget.Toolbar>
 

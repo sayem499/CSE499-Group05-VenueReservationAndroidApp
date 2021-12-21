@@ -11,8 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -40,6 +43,7 @@ import com.reservation.app.viewmodel.AppViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -68,6 +72,7 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadLocale();
         setContentView(R.layout.activity_home);
         pref = new SharedPrefManager(Home.this);
         firebaseAuth = FirebaseAuth.getInstance();
@@ -158,6 +163,12 @@ public class Home extends AppCompatActivity {
                         break;
 
 
+                        case R.id.menu_settings:
+                        startActivity(new Intent(getApplicationContext(),SettingsActivity.class));
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+
+
                         case R.id.menu_logout:
                             firebaseAuth.signOut();
                         pref.logout();
@@ -179,9 +190,7 @@ public class Home extends AppCompatActivity {
         setUserDataInSideMenu();
 
 
-
     }
-
     @SuppressLint("SetTextI18n")
     private void setUserDataInSideMenu() {
        if(userList != null) {
@@ -249,6 +258,23 @@ public class Home extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void setLocale(String s) {
+        Locale locale = new Locale(s);
+        Locale.setDefault(locale);
+        Configuration config =  new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config,getBaseContext().getResources().getDisplayMetrics());
+        SharedPreferences.Editor editor = getSharedPreferences("Settings",MODE_PRIVATE).edit();
+        editor.putString("App_Lang",s);
+        editor.apply();
+    }
+
+    public void loadLocale(){
+        SharedPreferences prefs = getSharedPreferences("Settings", Activity.MODE_PRIVATE);
+        String language = prefs.getString("App_Lang","");
+        setLocale(language);
     }
 }
 

@@ -17,7 +17,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Profile"
+        app:title="@string/profile"
         app:titleTextColor="#03101B">
 
     </androidx.appcompat.widget.Toolbar>
@@ -76,7 +76,7 @@
         android:layout_marginEnd="20dp"
         android:background="@drawable/edittext_design"
         android:ems="10"
-        android:hint="+880"
+        android:hint="@string/_880"
         android:inputType="phone"
         android:textAlignment="center"
         android:textColor="#000000"
@@ -104,7 +104,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="200dp"
         android:layout_marginBottom="8dp"
-        android:text="Mobile Number"
+        android:text="@string/mobile_number"
         android:textColor="#000000"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -123,7 +123,7 @@
         android:layout_marginEnd="20dp"
         android:background="@drawable/edittext_design"
         android:ems="10"
-        android:hint="Address"
+        android:hint="@string/address"
         android:inputType="textMultiLine"
         android:textAlignment="center"
         android:textColor="#000000"
@@ -152,7 +152,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="200dp"
         android:layout_marginBottom="4dp"
-        android:text="Address"
+        android:text="@string/address"
         android:textColor="#000000"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -171,7 +171,7 @@
         android:layout_marginEnd="20dp"
         android:background="@drawable/edittext_design"
         android:ems="10"
-        android:hint="Email"
+        android:hint="@string/email"
         android:inputType="textEmailAddress"
         android:textAlignment="center"
         android:textColor="#000000"
@@ -200,7 +200,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="200dp"
         android:layout_marginBottom="4dp"
-        android:text="Email"
+        android:text="@string/email"
         android:textColor="#000000"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -221,7 +221,7 @@
         android:layout_marginBottom="62dp"
         android:backgroundTint="#CCDA81"
         android:onClick="launchEditProfileFragment"
-        android:text="Edit Profile"
+        android:text="@string/edit_profile"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -251,7 +251,8 @@
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/profile_toolbar"
         app:layout_constraintVertical_bias="0.716"
-        app:srcCompat="@drawable/ic_baseline_photo_camera_24" />
+        app:srcCompat="@drawable/ic_baseline_photo_camera_24"
+        android:focusable="true" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

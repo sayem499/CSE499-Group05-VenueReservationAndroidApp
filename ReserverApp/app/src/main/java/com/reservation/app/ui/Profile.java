@@ -129,7 +129,7 @@ public class Profile extends AppCompatActivity {
                 Log.d(LOG_TAG,"!INSIDE  IFFF!!!!!!!!!!!!");
                 if (userProfilePicture.getUserPhoneNumber().equals(pref.getPhoneNumber())) {
 
-                    Glide.with(Profile.this).load(userProfilePicture.getPictureUrl()).into(userImage);
+                    Glide.with(Profile.this).load(userProfilePicture.getPictureUrl()).circleCrop().into(userImage);
                     break;
                 }
 
