@@ -36,6 +36,7 @@ public class VenueBookingActivity extends AppCompatActivity {
     private Venue venue;
     private Date selectedDate;
     private FirebaseUser firebaseUser;
+    private List<String> slots;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +81,7 @@ public class VenueBookingActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(List<String> data) {
+                slots = data;
                 viewBinding.venueSlot.setItems(data);
             }
 
@@ -177,6 +179,10 @@ public class VenueBookingActivity extends AppCompatActivity {
 
     private String getSelectedSlot() {
         int index = viewBinding.venueSlot.getSelectedIndex();
+
+        if (this.slots.size() > index) {
+            return slots.get(index);
+        }
 
         String[] slots = getResources().getStringArray(R.array.booking_slot);
 
