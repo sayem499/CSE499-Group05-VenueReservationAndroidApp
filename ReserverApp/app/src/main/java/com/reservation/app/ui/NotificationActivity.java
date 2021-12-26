@@ -1,7 +1,9 @@
 package com.reservation.app.ui;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,6 +18,8 @@ import com.reservation.app.adapters.NotificationAdapter;
 import com.reservation.app.datasource.NotificationModel;
 import com.reservation.app.datasource.SharedPrefManager;
 import com.reservation.app.viewmodel.AppViewModel;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,5 +74,20 @@ public class NotificationActivity extends AppCompatActivity {
              notificationAdapter.setNotificationList(notificationModelList);
 
         }
+
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull @NotNull RecyclerView recyclerView, @NonNull @NotNull RecyclerView.ViewHolder viewHolder, @NonNull @NotNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull @NotNull RecyclerView.ViewHolder viewHolder, int direction) {
+                String timeStamp = notificationModelList.get(viewHolder.getBindingAdapterPosition()).getNotificationTime();
+                appViewModel.deleteItem(timeStamp,NotificationActivity.this);
+                notificationModelList.remove(viewHolder.getBindingAdapterPosition());
+            }
+        }).attachToRecyclerView(recyclerView);
     }
 }

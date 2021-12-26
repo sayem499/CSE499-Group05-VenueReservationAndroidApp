@@ -56,6 +56,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     }
 
+
     public void setNotificationList(List<NotificationModel> data){
         notificationList.clear();
         notificationList.addAll(data);

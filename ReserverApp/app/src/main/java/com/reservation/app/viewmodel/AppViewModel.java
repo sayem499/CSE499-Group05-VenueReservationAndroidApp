@@ -71,4 +71,8 @@ public class AppViewModel extends AndroidViewModel {
 
     public List<NotificationModel> fetchNotifications(){return notificationList;}
 
+    public void deleteItem(String timeStamp,Context context){
+        appRepository.deleteNotification(timeStamp,context);
+    }
+
 }

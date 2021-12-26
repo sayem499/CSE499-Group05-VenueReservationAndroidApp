@@ -137,6 +137,12 @@ public class AppRepository {
 
         return notificationList;
     }
+
+    public void deleteNotification(String timeStamp,Context context){
+        pref = new SharedPrefManager(context);
+        getNotificationModelRef = firebaseRef.getReference("notifications/"+pref.getPhoneNumber());
+        getNotificationModelRef.child(timeStamp).removeValue();
+    }
 }
 
 
