@@ -80,7 +80,8 @@
             android:id="@+id/chat_main_recyclerView"
             android:visibility="visible"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/chat_main_send_msg"/>
 
     </LinearLayout>
 
