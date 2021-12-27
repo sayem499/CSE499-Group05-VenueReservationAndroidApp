@@ -24,6 +24,7 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class VenueBookingActivity extends AppCompatActivity {
 
@@ -37,14 +38,20 @@ public class VenueBookingActivity extends AppCompatActivity {
     private Date selectedDate;
     private FirebaseUser firebaseUser;
     private List<String> slots;
+    private androidx.appcompat.widget.Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         viewBinding = ActivityVenueBookingBinding.inflate(getLayoutInflater());
-
         setContentView(viewBinding.getRoot());
+
+        toolbar = findViewById(R.id.toolbar_booking);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
+
+
 
         Intent intent = getIntent();
 

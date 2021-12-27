@@ -1,7 +1,9 @@
 package com.reservation.app.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.reservation.app.R;
 import com.reservation.app.databinding.VenueListItemBinding;
 import com.reservation.app.model.Venue;
+import com.reservation.app.ui.venue.booking.VenueBookingActivity;
 import com.squareup.picasso.Picasso;
 
 
@@ -36,10 +39,10 @@ public class SearchRecyclerAdapter  extends RecyclerView.Adapter<SearchRecyclerA
     @NotNull
     @Override
     public SearchRecyclerAdapter.SearchRecyclerHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        SearchRecyclerHolder listHolder = new SearchRecyclerHolder(VenueListItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
 
-        return listHolder;
+        return new SearchRecyclerHolder(VenueListItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull SearchRecyclerAdapter.SearchRecyclerHolder holder, int position) {
@@ -56,6 +59,16 @@ public class SearchRecyclerAdapter  extends RecyclerView.Adapter<SearchRecyclerA
                     .placeholder(R.drawable.progress_indicator)
                     .error(R.drawable.placeholder1)
                     .into(holder.binding.photo);
+
+            holder.binding.venueListCardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mContext, VenueBookingActivity.class);
+                    intent.putExtra("extra_venue", venue);
+
+                    mContext.startActivity(intent);
+                }
+            });
         }
     }
 
