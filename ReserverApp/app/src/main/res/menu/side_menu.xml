@@ -12,6 +12,17 @@
 
     </item>
 
+    <item android:id="@+id/menu_booking"
+        android:icon="@drawable/ic_baseline_booking_24"
+        android:title="@string/booking">
+    </item>
+
+    <item android:id="@+id/menu_add_venue"
+        android:icon="@drawable/ic_baseline_add_venue_24"
+        android:title="@string/add_venue">
+
+    </item>
+
     <item android:id="@+id/menu_notifications"
         android:icon="@drawable/ic_baseline_notifications_active_24"
         android:title="@string/notifications">

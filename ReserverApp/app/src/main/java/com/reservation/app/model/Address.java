@@ -1,10 +1,12 @@
 package com.reservation.app.model;
 
+import java.io.Serializable;
+
 /**
  * @author Fatema
  * since 8/31/21.
  */
-public class Address {
+public class Address implements Serializable {
 
     private String description;
     private String street1;

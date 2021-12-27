@@ -40,7 +40,6 @@ import com.reservation.app.datasource.VenueDataManager;
 import com.reservation.app.datasource.helper.RemoteResult;
 import com.reservation.app.model.Venue;
 import com.reservation.app.ui.util.DialogBuilder;
-import com.reservation.app.ui.venue.VenueActivity;
 import com.reservation.app.viewmodel.AppViewModel;
 
 import java.util.ArrayList;
@@ -49,6 +48,8 @@ import java.util.Locale;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import com.reservation.app.ui.venue.add.AddVenueActivity;
+import com.reservation.app.ui.venue.booking.VenueBookingListActivity;
 
 
 public class Home extends AppCompatActivity {
@@ -165,6 +166,16 @@ public class Home extends AppCompatActivity {
                         drawerLayout.closeDrawer(GravityCompat.START);
                         break;
 
+                    case R.id.menu_add_venue:
+                        startActivity(new Intent(getApplicationContext(), AddVenueActivity.class));
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+
+                    case R.id.menu_booking:
+                        startActivity(new Intent(getApplicationContext(), VenueBookingListActivity.class));
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+
 
                         case R.id.menu_logout:
                             firebaseAuth.signOut();
@@ -173,6 +184,7 @@ public class Home extends AppCompatActivity {
                         drawerLayout.closeDrawer(GravityCompat.START);
                         finish();
                         break;
+
 
 
                 }

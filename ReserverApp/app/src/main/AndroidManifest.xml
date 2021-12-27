@@ -36,6 +36,15 @@
                 android:value="com.reservation.app.ui.Home" />
         </activity>
         <activity android:name=".ui.venue.VenueActivity" />
+        <activity
+            android:name=".ui.venue.booking.VenueBookingListActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.venue.booking.VenueBookingActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.venue.add.AddVenueActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity android:name=".ui.Profile">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

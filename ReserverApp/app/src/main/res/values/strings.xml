@@ -12,6 +12,7 @@
     <string name="didn_t_get_otp_resend">Didn\'t Get OTP?    <b>Resend</b></string>
     <string name="home">Home</string>
     <string name="profile">Profile</string>
+    <string name="add_venue">Add Venue</string>
     <string name="logout">Logout</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
@@ -52,4 +53,13 @@
     <string name="last_name">Last Name</string>
     <string name="reserver">Reserver</string>
     <string name="the_venue_booking_app">The Venue Booking App</string>
+    <string name="require">Require</string>
+    <string name="book_venue">Book Venue</string>
+    <string name="booking">Booking</string>
+
+    <array name="booking_slot">
+        <item>Day Shift</item>
+        <item>Night Shift</item>
+    </array>
+
 </resources>

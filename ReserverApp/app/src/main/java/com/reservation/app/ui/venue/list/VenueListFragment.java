@@ -1,10 +1,14 @@
 package com.reservation.app.ui.venue.list;
 
+import static com.reservation.app.ui.venue.booking.VenueBookingActivity.EXTRA_VENUE;
+
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,7 +20,9 @@ import com.reservation.app.R;
 import com.reservation.app.datasource.VenueDataManager;
 import com.reservation.app.datasource.helper.RemoteResult;
 import com.reservation.app.model.Venue;
+import com.reservation.app.ui.helper.ItemClickListener;
 import com.reservation.app.ui.util.DialogBuilder;
+import com.reservation.app.ui.venue.booking.VenueBookingActivity;
 import com.reservation.app.ui.venue.list.adapter.VenueAdapter;
 
 import org.jetbrains.annotations.NotNull;
@@ -28,7 +34,7 @@ import java.util.List;
  * @author Fatema
  * since 8/25/21.
  */
-public class VenueListFragment extends Fragment {
+public class VenueListFragment extends Fragment implements ItemClickListener<Venue> {
 
     private VenueAdapter venueAdapter;
     private RecyclerView recyclerView;
@@ -50,6 +56,7 @@ public class VenueListFragment extends Fragment {
         recyclerView = view.findViewById(R.id.list);
 
         venueAdapter = new VenueAdapter(new ArrayList<>());
+        venueAdapter.setItemClickListener(this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(venueAdapter);
@@ -78,5 +85,15 @@ public class VenueListFragment extends Fragment {
                 progressDialog.dismiss();
             }
         });
+    }
+
+    @Override
+    public void onItemClick(Venue item) {
+        Toast.makeText(getContext(), item.getName(), Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(getContext(), VenueBookingActivity.class);
+        intent.putExtra(EXTRA_VENUE, item);
+
+        startActivity(intent);
     }
 }
